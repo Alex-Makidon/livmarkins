@@ -1,17 +1,49 @@
 
 // Video splash logic
-(function(){
+(function () {
   const splash = document.getElementById('splash');
   const vid = document.getElementById('splashVideo');
-  if(!splash || !vid) return;
-  const finish = () => splash.classList.add('hide');
-  vid.addEventListener('ended', finish);
-  setTimeout(finish, 7000);
-  splash.addEventListener('click', finish);
-  vid.addEventListener('error', () => setTimeout(finish, 1200));
-})();
+  if (!splash || !vid) return;
 
-// Replace with your Formspree/Getform endpoint:
+  const finish = () => {
+    // guard against multiple calls
+    if (!splash.classList.contains('hide')) splash.classList.add('hide');
+  };
+
+  // Hide when video ends
+  vid.addEventListener('ended', finish);
+
+  // Let users skip
+  splash.addEventListener('click', finish);
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') finish(); });
+
+  // If autoplay was blocked, try playing on first interaction
+  const tryPlay = () => {
+    if (vid.paused) {
+      vid.play().catch(() => {/* ignore */});
+    }
+    window.removeEventListener('pointerdown', tryPlay, { passive: true });
+  };
+  window.addEventListener('pointerdown', tryPlay, { passive: true });
+
+  // Safety timeout based on actual duration (fallbacks included)
+  let safetyTimer = setTimeout(finish, 9000); // generic fallback
+  const setDurationTimer = () => {
+    clearTimeout(safetyTimer);
+    const dur = isFinite(vid.duration) && vid.duration > 0 ? vid.duration : 6; // seconds
+    // give it a small buffer, but cap at 12s
+    const ms = Math.min((dur * 1000) + 800, 12000);
+    safetyTimer = setTimeout(finish, ms);
+  };
+  if (isFinite(vid.duration) && vid.duration > 0) {
+    setDurationTimer();
+  } else {
+    vid.addEventListener('loadedmetadata', setDurationTimer, { once: true });
+  }
+
+  // If the video errors or stalls badly, hide quickly
+  vid.addEventListener('error', () => setTimeout(finish, 1200), { once: true });
+})();// Replace with your Formspree/Getform endpoint:
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id";
 
 const form = document.getElementById('quoteForm');
