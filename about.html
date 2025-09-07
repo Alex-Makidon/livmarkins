@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>About — LivMarkins Insurance</title>
+  <meta name="description" content="Learn about LivMarkins Insurance: our mission, values, and commitment to clarity and service."/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <header>
+  <div class="container nav">
+    <div class="brand">
+      <img src="assets/logo.png" alt="LivMarkins Insurance" />
+      <span class="brand-name">LivMarkins Insurance</span>
+    </div>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="index.html" >Home</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="resources.html" >Forms & Resources</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+  <section class="section">
+    <div class="container">
+      <h1>About Us</h1>
+      <p>LivMarkins Insurance is built on a simple promise: clear guidance and dependable coverage. Our licensed team brings years of experience across 
+      personal and commercial lines—from family health plans to specialized coverage for trucking and tower climbers.</p>
+      <div class="grid" style="grid-template-columns:1fr 1fr">
+        <div class="card">
+          <h3>Our Approach</h3>
+          <p>We focus on education first. We’ll compare carriers, explain trade‑offs, and tailor policies so you understand what you’re buying.</p>
+        </div>
+        <div class="card">
+          <h3>Why Clients Stay</h3>
+          <p>Responsive service, proactive reviews, and help at claim time. We’re here before—and after—you bind coverage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <h2>Contact</h2>
+      <p class="muted">Phone: 215‑515‑5975 · <a href="https://livmarkins.com">livmarkins.com</a></p>
+      <a class="button" href="index.html#quote">Get a Quote</a>
+    </div>
+  </section>
+  <footer>
+  <div class="container footer-grid">
+    <div>
+      <div class="brand" style="margin-bottom:10px">
+        <img src="assets/logo.png" alt="LivMarkins Insurance" />
+        <strong>LivMarkins Insurance</strong>
+      </div>
+      <div class="muted">
+        Phone: 215-515-5975<br/>
+        <a href="https://livmarkins.com">livmarkins.com</a>
+      </div>
+    </div>
+    <div>
+      <strong>Lines We Cover</strong>
+      <ul class="muted">
+        <li>Health & Life</li>
+        <li>Home & Auto</li>
+        <li>Trucking</li>
+        <li>Tower Climbers</li>
+      </ul>
+    </div>
+    <div>
+      <strong>Company</strong>
+      <ul class="muted">
+        <li><a href="about.html">About Us</a></li>
+        <li><a href="resources.html">Forms & Resources</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="container"><small>© <span id="year"></span> LivMarkins Insurance. All rights reserved.</small></div>
+</footer>
+<script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+  <script src="script.js"></script>
+</body>
+</html>
