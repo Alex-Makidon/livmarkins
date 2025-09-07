@@ -243,3 +243,9 @@ small, .muted{ color:#6b6b6b; }
   /* Slightly smaller hero logo on phones */
   .hero-full-logo{ width:clamp(180px,60vw,300px); }
 }
+.brand-logo {
+  max-height: 48px;   /* keeps header tidy */
+  height: auto;
+  width: auto;
+  object-fit: contain; /* prevents squish/crop */
+}
