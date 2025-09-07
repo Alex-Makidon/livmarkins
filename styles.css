@@ -26,3 +26,38 @@ input:focus,select:focus,textarea:focus{border-color:var(--sage);box-shadow:0 0 
 .splash-video-wrap{width:100%;height:100%;background:#fff}.splash-video{width:100%;height:100%;object-fit:contain;background:#fff;display:block}
 @media (prefers-reduced-motion:reduce){.splash{display:none!important}.splash-video{display:none!important}.accordion-panel{max-height:none!important}}
 @media (max-width:820px){.hero-inner{grid-template-columns:1fr}.ins-list{grid-template-columns:1fr}.footer-grid{grid-template-columns:1fr}.form-row{grid-template-columns:1fr}.hero-full-logo{width:clamp(180px,60vw,300px)}}
+
+.splash-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;  /* shows entire video */
+  background: #ffffff;  /* fill edges with white */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.hero-inner,
+section,
+footer,
+header {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Mobile tweaks */
+@media (max-width: 768px) {
+  .hero-inner,
+  section,
+  footer,
+  header {
+    padding-left: 1.25rem;   /* add more breathing room */
+    padding-right: 1.25rem;
+  }
+
+  .hero-text {
+    text-align: left;  /* keeps it aligned but not jammed */
+  }
+}
