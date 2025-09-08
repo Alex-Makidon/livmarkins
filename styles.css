@@ -249,3 +249,26 @@ small, .muted{ color:#6b6b6b; }
   width: auto;
   object-fit: contain; /* prevents squish/crop */
 }
+
+/* --- Splash: mobile-first (the version you liked) --- */
+.splash-video{
+  width:100%;
+  height:100%;
+  object-fit: contain;   /* MOBILE: show whole video */
+  background:#fff;
+  display:block;
+}
+
+/* --- Desktop only: keep full-bleed, but feel smaller --- */
+@media (min-width:1024px){
+  .splash-video{
+    object-fit: cover;   /* DESKTOP: fill viewport (no borders) */
+    transform: scale(1.06);
+    animation: splashSettle 600ms ease-out forwards; /* settle to 1.00 */
+  }
+}
+
+@keyframes splashSettle{
+  from { transform: scale(1.06); }
+  to   { transform: scale(1.00); }
+}
