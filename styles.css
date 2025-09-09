@@ -280,3 +280,8 @@ header .brand img.brand-wordmark{
 
 /* Safety: no horizontal scroll */
 html, body{ overflow-x:hidden; }
+/* Make header scroll with the page (not sticky) */
+header{
+  position: static;   /* overrides position: sticky */
+  top: auto;
+}
