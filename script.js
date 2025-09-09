@@ -1,13 +1,10 @@
-
+/* ===== Splash ===== */
 (function () {
   const splash = document.getElementById('splash');
   const vid = document.getElementById('splashVideo');
   if (!splash || !vid) return;
 
-  const finish = () => {
-    if (!splash.classList.contains('hide')) splash.classList.add('hide');
-  };
-
+  const finish = () => { if (!splash.classList.contains('hide')) splash.classList.add('hide'); };
   vid.addEventListener('ended', finish);
   splash.addEventListener('click', finish);
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') finish(); });
@@ -28,8 +25,8 @@
   vid.addEventListener('error', () => setTimeout(finish, 1200), { once:true });
 })();
 
+/* ===== Formspree ===== */
 const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id";
-
 const form = document.getElementById('quoteForm');
 if (form){
   form.addEventListener('submit', async (e)=>{
@@ -40,11 +37,7 @@ if (form){
     status.classList.remove('hidden');
     const data = new FormData(form);
     try{
-      const res = await fetch(FORMSPREE_ENDPOINT, {
-        method: 'POST',
-        headers: { 'Accept':'application/json' },
-        body: data
-      });
+      const res = await fetch(FORMSPREE_ENDPOINT, { method: 'POST', headers: { 'Accept':'application/json' }, body: data });
       if (res.ok){
         status.className = "notice success";
         status.textContent = "Thanks! Your request has been sent. We'll reach out within one business day.";
@@ -54,13 +47,14 @@ if (form){
         status.className = "notice alert";
         status.textContent = (msg && msg.errors && msg.errors[0] && msg.errors[0].message) || "Something went wrong. Please try again or call us.";
       }
-    } catch(err){
+    } catch{
       status.className = "notice alert";
       status.textContent = "Network error. Please try again or call us.";
     }
   });
 }
 
+/* ===== Resources loader ===== */
 (async function loadResources(){
   const list = document.getElementById('pdfList');
   if (!list) return;
@@ -83,4 +77,37 @@ if (form){
   } catch{
     list.innerHTML = '<div class="muted">No resources yet. Check back soon.</div>';
   }
+})();
+
+/* ===== Mobile burger nav ===== */
+(function () {
+  const toggle = document.querySelector('.nav-toggle');
+  const drawer = document.getElementById('mobileNav');
+  if (!toggle || !drawer) return;
+
+  const closeBtn = drawer.querySelector('.nav-close');
+  const backdrop = drawer.querySelector('.mobile-nav-backdrop');
+  const links = Array.from(drawer.querySelectorAll('a'));
+
+  const open = () => {
+    drawer.hidden = false;
+    document.body.classList.add('menu-open');
+    toggle.setAttribute('aria-expanded', 'true');
+    setTimeout(() => { links[0]?.focus(); }, 0);
+  };
+  const close = () => {
+    document.body.classList.remove('menu-open');
+    toggle.setAttribute('aria-expanded', 'false');
+    drawer.hidden = true;
+    toggle.focus();
+  };
+
+  toggle.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    expanded ? close() : open();
+  });
+  closeBtn?.addEventListener('click', close);
+  backdrop?.addEventListener('click', close);
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  links.forEach(a => a.addEventListener('click', close));
 })();
