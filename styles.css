@@ -2,7 +2,7 @@
    LivMarkins — styles.css
    =========================== */
 
-:root{
+:root {
   --sage:#7C9A7A;
   --sage-600:#6d8a6b;
   --charcoal:#2F2F2F;
@@ -11,9 +11,9 @@
   --accent:#C9D6C3;
 }
 
-*{ box-sizing:border-box; }
+* { box-sizing:border-box; }
 
-html, body{
+html, body {
   margin:0;
   padding:0;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
@@ -22,59 +22,70 @@ html, body{
 }
 
 /* Links */
-a{ color:var(--sage-600); text-decoration:none; }
-a:hover{ text-decoration:underline; }
+a { color:var(--sage-600); text-decoration:none; }
+a:hover { text-decoration:underline; }
 
 /* Page container */
-.container{
+.container {
   max-width:1100px;
   margin:0 auto;
   padding:24px;
 }
 
 /* Header */
-header{
+header {
   background:var(--white);
   border-bottom:1px solid #e8e4dd;
   position:sticky;
   top:0;
   z-index:50;
 }
-.nav{
+.nav {
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:24px;
   padding:16px 0;
 }
-.brand{ display:flex; align-items:center; gap:12px; }
-.brand-wordmark{ height:28px; width:auto; display:block; }
+.brand { display:flex; align-items:center; gap:12px; }
+.brand-wordmark { display:block; }
 
-nav ul{
+/* Nav */
+nav ul {
   display:flex; gap:18px;
   list-style:none; margin:0; padding:0;
 }
-nav a{ padding:8px 10px; border-radius:10px; }
-nav a.active, nav a:hover{ background:#eef1ec; text-decoration:none; }
+nav a {
+  padding:8px 10px;
+  border-radius:10px;
+}
+nav a.active, nav a:hover {
+  background:#eef1ec;
+  text-decoration:none;
+}
+nav a:focus-visible {
+  outline:2px solid var(--sage);
+  outline-offset:2px;
+}
 
 /* Hero */
-.hero{
+.hero {
   background:linear-gradient(180deg,#faf8f3,#f6f3ed);
   border-bottom:1px solid #e8e4dd;
 }
-.hero-inner{
+.hero-inner {
   display:grid;
   grid-template-columns:1.2fr 1fr;
   gap:28px;
   align-items:start;
   padding:40px 0;
 }
-.hero h1{ font-size:2.2rem; margin:0 0 10px; }
-.hero p{ font-size:1.05rem; margin:0 0 14px; line-height:1.6; }
-.hero .cta{ display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
+.hero h1 { font-size:2.2rem; margin:0 0 10px; }
+.hero p { font-size:1.05rem; margin:0 0 14px; line-height:1.6; }
+.hero .cta { display:flex; gap:12px; flex-wrap:wrap; margin-top:12px; }
 
 /* Full logo in hero */
-.hero-full-logo{
+.hero-full-logo {
   display:block;
   width:clamp(180px,28vw,360px);
   height:auto;
@@ -83,7 +94,7 @@ nav a.active, nav a:hover{ background:#eef1ec; text-decoration:none; }
 }
 
 /* Buttons */
-.button{
+.button {
   display:inline-block;
   background:var(--sage);
   color:#fff;
@@ -92,27 +103,27 @@ nav a.active, nav a:hover{ background:#eef1ec; text-decoration:none; }
   border:1px solid #6f8b6d;
   text-decoration:none;
 }
-.button:hover{ filter:brightness(0.97); text-decoration:none; }
-.button.secondary{
+.button:hover { filter:brightness(0.97); text-decoration:none; }
+.button.secondary {
   background:#eef1ec;
   color:#2e3a2c;
   border-color:#dbe4d8;
 }
 
 /* Sections & cards */
-.section{ padding:40px 0; border-bottom:1px solid #e8e4dd; }
-.grid{ display:grid; gap:18px; }
-.ins-list{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+.section { padding:40px 0; border-bottom:1px solid #e8e4dd; }
+.grid { display:grid; gap:18px; }
+.ins-list { grid-template-columns:repeat(2, minmax(0,1fr)); }
 
-.card{
+.card {
   background:#fff;
   border:1px solid #ebe7de;
   border-radius:16px;
   padding:18px;
   box-shadow:0 2px 8px rgba(0,0,0,.04);
 }
-.card h3{ margin:0 0 8px; }
-.badge{
+.card h3 { margin:0 0 8px; }
+.badge {
   display:inline-block;
   background:#eef1ec;
   color:var(--sage-600);
@@ -123,18 +134,18 @@ nav a.active, nav a:hover{ background:#eef1ec; text-decoration:none; }
 }
 
 /* Details/accordion */
-details{
+details {
   background:#fbfaf6;
   border:1px solid #eee7d9;
   padding:14px;
   border-radius:12px;
 }
-details + details{ margin-top:10px; }
-details summary{ cursor:pointer; font-weight:600; color:#2e3a2c; }
+details + details { margin-top:10px; }
+details summary { cursor:pointer; font-weight:600; color:#2e3a2c; }
 
-/* Keep right panel from pushing left column on desktop */
+/* Accordion scroll on desktop */
 @media (min-width:821px){
-  .accordion-panel{
+  .accordion-panel {
     max-height:520px;
     overflow:auto;
     -webkit-overflow-scrolling:touch;
@@ -142,9 +153,9 @@ details summary{ cursor:pointer; font-weight:600; color:#2e3a2c; }
 }
 
 /* Forms */
-form{ display:grid; gap:12px; }
-.input{ display:grid; gap:6px; }
-input, select, textarea{
+form { display:grid; gap:12px; }
+.input { display:grid; gap:6px; }
+input, select, textarea {
   width:100%;
   padding:12px 12px;
   border-radius:12px;
@@ -152,69 +163,70 @@ input, select, textarea{
   background:#fff;
   outline:none;
 }
-input:focus, select:focus, textarea:focus{
+input:focus, select:focus, textarea:focus {
   border-color:var(--sage);
   box-shadow:0 0 0 3px #dfe9db;
 }
-.form-row{
+.form-row {
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:12px;
 }
-.notice{ padding:10px 12px; border-radius:12px; border:1px solid #e7e2d8; background:#fbfaf7; }
-.alert{ border-color:#f0d7d5; color:#8a1a13; background:#fff7f6; }
-.success{ border-color:#cfe6cf; color:#1e5d1e; background:#f6fbf6; }
-.hidden{ display:none; }
+.notice {
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px solid #e7e2d8;
+  background:#fbfaf7;
+}
+.alert { border-color:#f0d7d5; color:#8a1a13; background:#fff7f6; }
+.success { border-color:#cfe6cf; color:#1e5d1e; background:#f6fbf6; }
+.hidden { display:none; }
 
 /* Footer */
-footer{
+footer {
   padding:36px 0;
   background:#fbfaf6;
   border-top:1px solid #e8e4dd;
   margin-top:24px;
 }
-.footer-grid{
+.footer-grid {
   display:grid;
   grid-template-columns:2fr 1fr 1fr;
   gap:24px;
 }
-small, .muted{ color:#6b6b6b; }
+small, .muted { color:#6b6b6b; }
 
 /* ===========================
-   Splash video (top overlay)
+   Splash video
    =========================== */
-
-/* Overlay base */
-.splash{
+.splash {
   position:fixed; inset:0;
   background:#fff;
   display:grid; place-items:center;
   z-index:9999;
   transition:opacity .45s ease;
 }
-.splash.hide{ opacity:0; visibility:hidden; }
-
-.splash-video-wrap{ width:100%; height:100%; background:#fff; }
-
-/* Always fill viewport so no borders appear */
-.splash-video{
+.splash.hide { opacity:0; visibility:hidden; }
+.splash-video-wrap { width:100%; height:100%; background:#fff; }
+.splash-video {
   width:100%;
   height:100%;
-  object-fit:cover;      /* important: fill edges */
   background:#fff;
   display:block;
 }
-
-/* Desktop-only: look a bit smaller without exposing edges */
+@media (max-width:1023px){
+  .splash-video { object-fit:contain; }
+}
 @media (min-width:1024px){
-  .splash-video{
-    transform:scale(1.06);          /* start slightly zoomed */
-    animation:splashSettle 600ms ease-out forwards; /* settle to 1.00 */
+  .splash-video {
+    object-fit:cover;
+    transform:scale(1.06);
+    animation:splashSettle 600ms ease-out forwards;
   }
 }
-@keyframes splashSettle{
+@keyframes splashSettle {
   from{ transform:scale(1.06); }
-  to  { transform:scale(1.00); }
+  to{ transform:scale(1.00); }
 }
 
 /* Respect reduced motion */
@@ -227,176 +239,54 @@ small, .muted{ color:#6b6b6b; }
 /* ===========================
    Responsive
    =========================== */
-
 @media (max-width:820px){
   .hero-inner{ grid-template-columns:1fr; }
   .ins-list{ grid-template-columns:1fr; }
   .footer-grid{ grid-template-columns:1fr; }
   .form-row{ grid-template-columns:1fr; }
-
-  /* Add a bit more side padding on small screens */
-  .container{
-    padding-left:20px;
-    padding-right:20px;
-  }
-
-  /* Slightly smaller hero logo on phones */
+  .container{ padding-left:20px; padding-right:20px; }
   .hero-full-logo{ width:clamp(180px,60vw,300px); }
 }
-.brand-logo {
-  max-height: 48px;   /* keeps header tidy */
-  height: auto;
-  width: auto;
-  object-fit: contain; /* prevents squish/crop */
-}
 
-/* --- Splash: mobile-first (the version you liked) --- */
-.splash-video{
-  width:100%;
-  height:100%;
-  object-fit: contain;   /* MOBILE: show whole video */
-  background:#fff;
-  display:block;
-}
-
-/* --- Desktop only: keep full-bleed, but feel smaller --- */
-@media (min-width:1024px){
-  .splash-video{
-    object-fit: cover;   /* DESKTOP: fill viewport (no borders) */
-    transform: scale(1.06);
-    animation: splashSettle 600ms ease-out forwards; /* settle to 1.00 */
-  }
-}
-
-@keyframes splashSettle{
-  from { transform: scale(1.06); }
-  to   { transform: scale(1.00); }
-}
-/* Mobile nav: keep each pill on one line, allow gentle horizontal scroll */
-@media (max-width: 420px){
-  header .container { padding-left: 14px; padding-right: 14px; }
-
-  nav ul{
-    flex-wrap: nowrap;          /* no wrapping */
-    overflow-x: auto;           /* scroll if too wide */
-    -webkit-overflow-scrolling: touch;
-    gap: 12px;
-    scrollbar-width: none;      /* hide scrollbar (Firefox) */
-  }
-  nav ul::-webkit-scrollbar{ display: none; } /* hide scrollbar (WebKit) */
-
-  nav a{
-    white-space: nowrap;        /* keep each link on a single line */
-    display: inline-block;
-    padding: 8px 12px;          /* slightly tighter so it fits better */
-    border-radius: 999px;       /* keep the pill look */
-    font-size: 16px;            /* you can drop to 15px if still tight */
-    line-height: 1.1;
-  }
-
-  /* Optional: slightly shrink the brand mark to make room */
-  .brand-wordmark{ height: 24px; }
-}
-
-/* Accessibility: visible keyboard focus without duplicating the pill */
-nav a:focus-visible{
-  outline: 2px solid var(--sage);
-  outline-offset: 2px;
-/* --- Mobile nav: prevent wrap + allow gentle horizontal scroll --- */
-@media (max-width: 430px){
+/* Mobile nav pills */
+@media (max-width:430px){
   header .container{ padding-left:14px; padding-right:14px; }
-
-  header nav ul{
-    display:flex;
-    gap:12px;
-    flex-wrap:nowrap;        /* don't wrap to two lines */
-    overflow-x:auto;         /* allow swipe/scroll if needed */
-    -webkit-overflow-scrolling:touch;
-    scrollbar-width:none;    /* Firefox: hide scrollbar */
-  }
-  header nav ul::-webkit-scrollbar{ display:none; } /* WebKit: hide scrollbar */
-
-  header nav li{ flex:0 0 auto; }           /* keep each item its own width */
-  header nav a{
-    white-space:nowrap;                      /* key: keep pill text on one line */
-    display:inline-flex; align-items:center; /* tidy vertical centering */
-    padding:8px 12px;
-    border-radius:999px;
-    line-height:1.1;
-    font-size:15.5px;                        /* slightly smaller to help fit */
-  }
-}
-
-   /* Mobile nav: keep pills single-line, no wrapping; allow gentle horizontal scroll */
-@media (max-width: 480px){
-  header .container{ padding-left:14px; padding-right:14px; }
-
-  header nav ul{
-    display:flex;
-    gap:12px;
-    flex-wrap:nowrap;              /* don't wrap */
-    overflow-x:auto;               /* swipe if needed */
+  header nav ul {
+    display:flex; gap:12px;
+    flex-wrap:nowrap;
+    overflow-x:auto;
     -webkit-overflow-scrolling:touch;
     scrollbar-width:none;
   }
   header nav ul::-webkit-scrollbar{ display:none; }
-
   header nav li{ flex:0 0 auto; }
-
-  /* key: make the anchor a non-wrapping inline-block so background is one pill */
-  header nav a{
-    display:inline-flex;           /* single background box */
+  header nav a {
+    white-space:nowrap;
+    display:inline-flex;
     align-items:center;
-    white-space:nowrap;            /* no line break inside */
     padding:8px 12px;
     border-radius:999px;
     line-height:1.1;
-    font-size:15.5px;              /* a touch smaller helps fit */
-    text-decoration:none;
-  }
-  /* keep the active pill the same element, so it won't split */
-  header nav a.active{
-    background:#eef1ec;
+    font-size:15.5px;
   }
 }
-/* --- Prevent nav click overlap on small screens --- */
-header nav ul{
-  display:flex;
-  gap:16px;
-  flex-wrap:nowrap;
-  overflow-x:auto;                 /* allow pill list to scroll instead of wrapping */
-  -webkit-overflow-scrolling:touch;
-  scrollbar-width:none;
-}
-header nav ul::-webkit-scrollbar{ display:none; }
 
-header nav li{ 
-  flex:0 0 auto; 
-  position:relative;               /* isolate each hitbox */
-}
-
-header nav a{
-  display:inline-flex;
-  align-items:center;
-  white-space:nowrap;              /* keep “Forms & Resources” on one line */
-  padding:8px 12px;
-  border-radius:999px;
-  position:relative;
-  z-index:1;                       /* ensure correct click target */
-}
-
-/* Slightly tighten nav on narrow phones */
-@media (max-width: 390px){
+/* Tighten nav on very narrow phones */
+@media (max-width:390px){
   header nav a{ font-size:15px; padding:7px 10px; }
 }
-.brand-wordmark {
-  height: 64px;   /* was 28px */
-  max-height: 72px;
-  width: auto;
-  object-fit: contain;
+
+/* --- Header logo size override --- */
+header .brand img.brand-wordmark {
+  height:72px;
+  max-height:80px;
+  width:auto;
+  object-fit:contain;
+  display:block;
 }
-@media (max-width: 480px) {
-  .brand-wordmark {
-    height: 52px;  /* a bit smaller on mobile, but not tiny */
+@media (max-width:480px){
+  header .brand img.brand-wordmark {
+    height:56px;
+    max-height:60px;
   }
 }
