@@ -390,13 +390,13 @@ header nav a{
   header nav a{ font-size:15px; padding:7px 10px; }
 }
 .brand-wordmark {
-  height: 56px;   /* was 28px */
-  max-height: 56px;
+  height: 64px;   /* was 28px */
+  max-height: 72px;
   width: auto;
   object-fit: contain;
 }
 @media (max-width: 480px) {
   .brand-wordmark {
-    height: 40px;  /* a bit smaller on mobile, but not tiny */
+    height: 52px;  /* a bit smaller on mobile, but not tiny */
   }
 }
