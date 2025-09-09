@@ -389,3 +389,14 @@ header nav a{
 @media (max-width: 390px){
   header nav a{ font-size:15px; padding:7px 10px; }
 }
+.brand-wordmark {
+  height: 42px;   /* was 28px */
+  max-height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+@media (max-width: 480px) {
+  .brand-wordmark {
+    height: 36px;  /* a bit smaller on mobile, but not tiny */
+  }
+}
