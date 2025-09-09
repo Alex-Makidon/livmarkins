@@ -290,3 +290,46 @@ header .brand img.brand-wordmark {
     max-height:60px;
   }
 }
+/* === Mobile header fit & no-overflow =============================== */
+@media (max-width: 480px){
+  /* tighter container and gaps so everything fits */
+  header .container.nav{
+    padding-left:12px;
+    padding-right:12px;
+    gap:10px;
+  }
+
+  /* logo a touch smaller so pills have room */
+  header .brand img.brand-wordmark{
+    height:48px !important;   /* was 56px */
+    max-height:50px;
+  }
+
+  /* let nav take remaining space and scroll horizontally if needed */
+  header nav{
+    flex:1 1 auto;
+    min-width:0;              /* allows the ul to shrink instead of overflowing */
+  }
+  header nav ul{
+    justify-content:flex-end;
+    gap:10px;
+    flex-wrap:nowrap;
+    overflow-x:auto;          /* swipe if too many pills */
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    padding-bottom:2px;       /* avoids accidental scrollbar overlay */
+  }
+  header nav ul::-webkit-scrollbar{ display:none; }
+
+  header nav li{ flex:0 0 auto; }
+  header nav a{
+    white-space:nowrap;
+    padding:8px 10px;
+    border-radius:999px;
+    font-size:15px;
+    line-height:1.1;
+  }
+}
+
+/* in case any element tries to extend the page width */
+html, body { overflow-x: hidden; }
