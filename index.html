@@ -12,19 +12,10 @@
   <meta property="og:title" content="LivMarkins Insurance — Coverage with Clarity">
   <meta property="og:description" content="Helping families and businesses protect what matters — Health, Life, Home & Auto, Trucking, and Tower Climbers coverage.">
   <meta property="og:url" content="https://alex-makidon.github.io/livmarkins/">
-  <meta property="og:image" content="https://alex-makidon.github.io/livmarkins/assets/share-image.png?v=4">
+  <meta property="og:image" content="https://alex-makidon.github.io/livmarkins/assets/share-image.png?v=5">
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="LivMarkins Insurance — Coverage with Clarity">
-  <meta name="twitter:description" content="Helping families and businesses protect what matters most.">
-  <meta name="twitter:image" content="https://alex-makidon.github.io/livmarkins/assets/share-image.png?v=4">
-
-  <!-- Favicon (optional; add assets/favicon.png) -->
-  <link rel="icon" type="image/png" href="assets/favicon.png?v=4">
-
-  <!-- Cache-bust CSS -->
-  <link rel="stylesheet" href="styles.css?v=4"/>
+  <link rel="icon" type="image/png" href="assets/favicon.png?v=5">
+  <link rel="stylesheet" href="styles.css?v=5"/>
 </head>
 <body>
   <!-- Splash -->
@@ -33,25 +24,42 @@
       <video id="splashVideo" class="splash-video" autoplay muted playsinline preload="metadata" poster="assets/splash_poster.jpg">
         <source src="assets/splash.webm" type="video/webm"/>
         <source src="assets/splash.mp4" type="video/mp4"/>
-        <img src="assets/logo.png" alt=""/>
+        <img src="assets/logo.png" alt="">
       </video>
       <noscript><img src="assets/splash_poster.jpg" alt="LivMarkins splash"></noscript>
     </div>
   </div>
 
+  <!-- Header (desktop + mobile burger) -->
   <header>
     <div class="container nav">
       <div class="brand">
-        <!-- Cache-bust the header logo, too -->
-        <img src="assets/logo_name.png?v=4" alt="LivMarkins Insurance" class="brand-wordmark"/>
+        <img src="assets/logo_name.png?v=5" alt="LivMarkins" class="brand-wordmark"/>
       </div>
-      <nav aria-label="Primary">
+
+      <nav class="nav-desktop" aria-label="Primary">
         <ul>
-          <li><a href="index.html" class="active" aria-current="page">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="resources.html">Forms&nbsp;&amp;&nbsp;Resources</a></li>
+          <li><a href="index.html" class="home-link active" aria-current="page">Home</a></li>
+          <li><a href="about.html" class="about-link">About</a></li>
+          <li><a href="resources.html" class="res-link">Forms&nbsp;&amp;&nbsp;Resources</a></li>
         </ul>
       </nav>
+
+      <button class="nav-toggle" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+
+    <div id="mobileNav" class="mobile-nav" hidden>
+      <div class="mobile-nav-panel">
+        <button class="nav-close" aria-label="Close menu">✕</button>
+        <ul>
+          <li><a href="index.html" class="home-link" aria-current="page">Home</a></li>
+          <li><a href="about.html" class="about-link">About</a></li>
+          <li><a href="resources.html" class="res-link">Forms &amp; Resources</a></li>
+        </ul>
+      </div>
+      <div class="mobile-nav-backdrop"></div>
     </div>
   </header>
 
@@ -98,7 +106,7 @@
     </div>
   </section>
 
-  <section class="section" id="products">
+  <section class="section">
     <div class="container">
       <h2>What we insure</h2>
       <div class="grid ins-list" role="list">
@@ -183,6 +191,6 @@
   </footer>
 
   <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
-  <script src="script.js?v=4" defer></script>
+  <script src="script.js?v=5" defer></script>
 </body>
 </html>
