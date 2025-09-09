@@ -302,3 +302,27 @@ small, .muted{ color:#6b6b6b; }
 nav a:focus-visible{
   outline: 2px solid var(--sage);
   outline-offset: 2px;
+/* --- Mobile nav: prevent wrap + allow gentle horizontal scroll --- */
+@media (max-width: 430px){
+  header .container{ padding-left:14px; padding-right:14px; }
+
+  header nav ul{
+    display:flex;
+    gap:12px;
+    flex-wrap:nowrap;        /* don't wrap to two lines */
+    overflow-x:auto;         /* allow swipe/scroll if needed */
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;    /* Firefox: hide scrollbar */
+  }
+  header nav ul::-webkit-scrollbar{ display:none; } /* WebKit: hide scrollbar */
+
+  header nav li{ flex:0 0 auto; }           /* keep each item its own width */
+  header nav a{
+    white-space:nowrap;                      /* key: keep pill text on one line */
+    display:inline-flex; align-items:center; /* tidy vertical centering */
+    padding:8px 12px;
+    border-radius:999px;
+    line-height:1.1;
+    font-size:15.5px;                        /* slightly smaller to help fit */
+  }
+}
