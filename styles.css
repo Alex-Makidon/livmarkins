@@ -326,3 +326,36 @@ nav a:focus-visible{
     font-size:15.5px;                        /* slightly smaller to help fit */
   }
 }
+
+   /* Mobile nav: keep pills single-line, no wrapping; allow gentle horizontal scroll */
+@media (max-width: 480px){
+  header .container{ padding-left:14px; padding-right:14px; }
+
+  header nav ul{
+    display:flex;
+    gap:12px;
+    flex-wrap:nowrap;              /* don't wrap */
+    overflow-x:auto;               /* swipe if needed */
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  header nav ul::-webkit-scrollbar{ display:none; }
+
+  header nav li{ flex:0 0 auto; }
+
+  /* key: make the anchor a non-wrapping inline-block so background is one pill */
+  header nav a{
+    display:inline-flex;           /* single background box */
+    align-items:center;
+    white-space:nowrap;            /* no line break inside */
+    padding:8px 12px;
+    border-radius:999px;
+    line-height:1.1;
+    font-size:15.5px;              /* a touch smaller helps fit */
+    text-decoration:none;
+  }
+  /* keep the active pill the same element, so it won't split */
+  header nav a.active{
+    background:#eef1ec;
+  }
+}
