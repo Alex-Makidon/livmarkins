@@ -359,3 +359,33 @@ nav a:focus-visible{
     background:#eef1ec;
   }
 }
+/* --- Prevent nav click overlap on small screens --- */
+header nav ul{
+  display:flex;
+  gap:16px;
+  flex-wrap:nowrap;
+  overflow-x:auto;                 /* allow pill list to scroll instead of wrapping */
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+header nav ul::-webkit-scrollbar{ display:none; }
+
+header nav li{ 
+  flex:0 0 auto; 
+  position:relative;               /* isolate each hitbox */
+}
+
+header nav a{
+  display:inline-flex;
+  align-items:center;
+  white-space:nowrap;              /* keep “Forms & Resources” on one line */
+  padding:8px 12px;
+  border-radius:999px;
+  position:relative;
+  z-index:1;                       /* ensure correct click target */
+}
+
+/* Slightly tighten nav on narrow phones */
+@media (max-width: 390px){
+  header nav a{ font-size:15px; padding:7px 10px; }
+}
