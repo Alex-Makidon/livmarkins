@@ -272,3 +272,33 @@ small, .muted{ color:#6b6b6b; }
   from { transform: scale(1.06); }
   to   { transform: scale(1.00); }
 }
+/* Mobile nav: keep each pill on one line, allow gentle horizontal scroll */
+@media (max-width: 420px){
+  header .container { padding-left: 14px; padding-right: 14px; }
+
+  nav ul{
+    flex-wrap: nowrap;          /* no wrapping */
+    overflow-x: auto;           /* scroll if too wide */
+    -webkit-overflow-scrolling: touch;
+    gap: 12px;
+    scrollbar-width: none;      /* hide scrollbar (Firefox) */
+  }
+  nav ul::-webkit-scrollbar{ display: none; } /* hide scrollbar (WebKit) */
+
+  nav a{
+    white-space: nowrap;        /* keep each link on a single line */
+    display: inline-block;
+    padding: 8px 12px;          /* slightly tighter so it fits better */
+    border-radius: 999px;       /* keep the pill look */
+    font-size: 16px;            /* you can drop to 15px if still tight */
+    line-height: 1.1;
+  }
+
+  /* Optional: slightly shrink the brand mark to make room */
+  .brand-wordmark{ height: 24px; }
+}
+
+/* Accessibility: visible keyboard focus without duplicating the pill */
+nav a:focus-visible{
+  outline: 2px solid var(--sage);
+  outline-offset: 2px;
