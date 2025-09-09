@@ -5,31 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Forms & Resources — LivMarkins Insurance</title>
   <meta name="description" content="Download client forms and helpful resources from LivMarkins Insurance."/>
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="LivMarkins Insurance">
-  <meta property="og:title" content="Forms & Resources — LivMarkins Insurance">
-  <meta property="og:description" content="Download client forms and helpful resources from LivMarkins Insurance.">
-  <meta property="og:url" content="https://alex-makidon.github.io/livmarkins/resources.html">
-  <meta property="og:image" content="https://alex-makidon.github.io/livmarkins/assets/share-image.png?v=4">
-
-  <!-- Cache-bust CSS -->
-  <link rel="stylesheet" href="styles.css?v=4"/>
+  <meta property="og:image" content="https://alex-makidon.github.io/livmarkins/assets/share-image.png?v=5">
+  <link rel="stylesheet" href="styles.css?v=5"/>
 </head>
 <body>
   <header>
     <div class="container nav">
       <div class="brand">
-        <img src="assets/logo_name.png?v=4" alt="LivMarkins Insurance" class="brand-wordmark"/>
+        <img src="assets/logo_name.png?v=5" alt="LivMarkins" class="brand-wordmark"/>
       </div>
-      <nav aria-label="Primary">
+
+      <nav class="nav-desktop" aria-label="Primary">
         <ul>
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="resources.html" class="active" aria-current="page">Forms&nbsp;&amp;&nbsp;Resources</a></li>
+          <li><a href="index.html" class="home-link">Home</a></li>
+          <li><a href="about.html" class="about-link">About</a></li>
+          <li><a href="resources.html" class="res-link active" aria-current="page">Forms&nbsp;&amp;&nbsp;Resources</a></li>
         </ul>
       </nav>
+
+      <button class="nav-toggle" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+
+    <div id="mobileNav" class="mobile-nav" hidden>
+      <div class="mobile-nav-panel">
+        <button class="nav-close" aria-label="Close menu">✕</button>
+        <ul>
+          <li><a href="index.html" class="home-link">Home</a></li>
+          <li><a href="about.html" class="about-link">About</a></li>
+          <li><a href="resources.html" class="res-link" aria-current="page">Forms &amp; Resources</a></li>
+        </ul>
+      </div>
+      <div class="mobile-nav-backdrop"></div>
     </div>
   </header>
 
@@ -43,7 +51,6 @@
       </div>
       <div class="card">
         <h3>Available Downloads</h3>
-        <!-- This is where script.js will inject cards from assets/resources.json -->
         <div id="pdfList" class="grid ins-list">
           <div class="muted">No resources yet. Check back soon.</div>
         </div>
@@ -75,6 +82,6 @@
   </footer>
 
   <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
-  <script src="script.js?v=4" defer></script>
+  <script src="script.js?v=5" defer></script>
 </body>
 </html>
