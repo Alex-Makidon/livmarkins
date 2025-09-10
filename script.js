@@ -91,20 +91,20 @@ if (form){
   const closeBtn = drawer.querySelector('.nav-close');
   const backdrop = drawer.querySelector('.mobile-nav-backdrop');
   const links = Array.from(drawer.querySelectorAll('a'));
-
-  // --- Add bottom CTAs (Get a Quote + Call Now) if not present ---
   const panel = drawer.querySelector('.mobile-nav-panel');
+
+  // --- Add bottom CTAs if missing ---
   if (panel && !panel.querySelector('.mobile-cta')) {
     const cta = document.createElement('div');
     cta.className = 'mobile-cta';
+    // Use index.html#quote so it works from any page
     cta.innerHTML = `
-      <a class="button" href="#quote">Get a Quote</a>
+      <a class="button" href="index.html#quote">Get a Quote</a>
       <a class="button secondary" href="tel:+12155155975">Call Now</a>
     `;
     panel.appendChild(cta);
   }
 
-  // --- Open / close logic ---
   const open = () => {
     drawer.hidden = false;
     document.body.classList.add('menu-open');
@@ -126,7 +126,44 @@ if (form){
   backdrop?.addEventListener('click', () => close());
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-  // Let links navigate normally; no extra handlers needed now that layering is fixed.
+  // Handle in-page anchors / quote CTA so the drawer closes first
+  const allDrawerLinks = Array.from(drawer.querySelectorAll('a'));
+  allDrawerLinks.forEach(a => {
+    const href = a.getAttribute('href') || '';
+
+    // Get a Quote from any page:
+    if (href.includes('#quote')) {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const onHome = /(^|\/)(index\.html)?$/.test(location.pathname);
+        close(false);
+        requestAnimationFrame(() => {
+          if (onHome) {
+            // Smooth-scroll on Home
+            const el = document.getElementById('quote');
+            if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+          } else {
+            // Navigate to Home with hash
+            window.location.href = 'index.html#quote';
+          }
+        });
+      });
+      return;
+    }
+
+    // Generic in-page hash links (if you add more later)
+    if (href.startsWith('#')) {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        close(false);
+        const id = href.slice(1);
+        requestAnimationFrame(() => {
+          const el = document.getElementById(id);
+          if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
+        });
+      });
+    }
+  });
 })();
 
 /* ===== Mobile: set CSS var for header height so body can pad correctly ===== */
@@ -138,7 +175,6 @@ if (form){
     const h = header.offsetHeight;
     document.documentElement.style.setProperty('--header-h', h + 'px');
   };
-  // Set on load and whenever things might change size
   window.addEventListener('load', setHeaderH);
   window.addEventListener('resize', setHeaderH);
   const ro = new ResizeObserver(setHeaderH);
