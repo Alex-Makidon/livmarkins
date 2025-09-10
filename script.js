@@ -90,7 +90,7 @@ if (form){
 
   const closeBtn = drawer.querySelector('.nav-close');
   const backdrop = drawer.querySelector('.mobile-nav-backdrop');
-  const links = Array.from(drawer.querySelectorAll('a'));
+  const links = Array.from(drawer.querySelectorAll('a')); // kept for focus mgmt
 
   const open = () => {
     drawer.hidden = false;
@@ -113,24 +113,7 @@ if (form){
   backdrop?.addEventListener('click', () => close());
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-  // Unified tap handler: triggers on touchend or click, then navigates reliably
-  function handleNavTap(ev, href){
-    if (!href) return;
-    // In-page anchor? just close and let default behavior work.
-    if (href.startsWith('#')) { close(false); return; }
-
-    ev.preventDefault();
-    // Don’t steal focus during the tap; close the drawer quietly.
-    requestAnimationFrame(() => {
-      close(false);
-      setTimeout(() => { window.location.href = href; }, 0);
-    });
-  }
-
-  links.forEach(a => {
-    const href = a.getAttribute('href') || '';
-    // Touch first (Chrome iOS & Safari), then click fallback.
-    a.addEventListener('touchend', (e) => handleNavTap(e, href), { passive:false });
-    a.addEventListener('click', (e) => handleNavTap(e, href));
-  });
+  // NOTE: No click/touch handlers on links.
+  // Default browser navigation will occur on tap,
+  // and the new page load will naturally replace the drawer.
 })();
