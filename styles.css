@@ -293,3 +293,6 @@ header .brand img.brand-wordmark{
   object-fit:contain;
   display:block;
 }
+/* Put drawer above the dim backdrop */
+.mobile-nav-backdrop{ z-index:1; }
+.mobile-nav-panel{ z-index:2; }
