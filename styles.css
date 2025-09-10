@@ -328,3 +328,6 @@ header .brand img.brand-wordmark{
 
 /* Safety: no horizontal scroll */
 html, body{ overflow-x:hidden; }
+
+/* Ensure in-page scroll targets aren't hidden under the fixed header */
+#quote { scroll-margin-top: var(--header-h, 96px); }
