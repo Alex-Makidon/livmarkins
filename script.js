@@ -102,19 +102,29 @@ if (form){
     document.body.classList.remove('menu-open');
     toggle.setAttribute('aria-expanded', 'false');
     drawer.hidden = true;
-    toggle.focus();
   };
 
   toggle.addEventListener('click', () => {
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
     expanded ? close() : open();
   });
-  closeBtn?.addEventListener('click', close);
-  backdrop?.addEventListener('click', close);
-  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  closeBtn?.addEventListener('click', () => { close(); toggle.focus(); });
+  backdrop?.addEventListener('click', () => { close(); toggle.focus(); });
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') { close(); toggle.focus(); } });
 
-  // IMPORTANT: Let navigation start before closing (fixes iOS Safari swallowing taps)
-  links.forEach(a => a.addEventListener('click', () => {
-    requestAnimationFrame(() => setTimeout(close, 0));
+  // Robust iOS fix: navigate explicitly after closing (no focus steal during tap)
+  links.forEach(a => a.addEventListener('click', (e) => {
+    const href = a.getAttribute('href') || '';
+    if (!href) return;
+
+    // In-page anchor: let default happen, just close.
+    if (href.startsWith('#')) { close(); return; }
+
+    e.preventDefault();               // prevent iOS from swallowing the tap
+    requestAnimationFrame(() => {
+      close();                        // close without focusing toggle
+      // Kick off navigation after drawer state settles
+      setTimeout(() => { window.location.href = href; }, 0);
+    });
   }));
 })();
