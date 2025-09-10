@@ -90,8 +90,21 @@ if (form){
 
   const closeBtn = drawer.querySelector('.nav-close');
   const backdrop = drawer.querySelector('.mobile-nav-backdrop');
-  const links = Array.from(drawer.querySelectorAll('a')); // kept for focus mgmt
+  const links = Array.from(drawer.querySelectorAll('a'));
 
+  // --- Add bottom CTAs (Get a Quote + Call Now) if not present ---
+  const panel = drawer.querySelector('.mobile-nav-panel');
+  if (panel && !panel.querySelector('.mobile-cta')) {
+    const cta = document.createElement('div');
+    cta.className = 'mobile-cta';
+    cta.innerHTML = `
+      <a class="button" href="#quote">Get a Quote</a>
+      <a class="button secondary" href="tel:+12155155975">Call Now</a>
+    `;
+    panel.appendChild(cta);
+  }
+
+  // --- Open / close logic ---
   const open = () => {
     drawer.hidden = false;
     document.body.classList.add('menu-open');
@@ -113,7 +126,21 @@ if (form){
   backdrop?.addEventListener('click', () => close());
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-  // NOTE: No click/touch handlers on links.
-  // Default browser navigation will occur on tap,
-  // and the new page load will naturally replace the drawer.
+  // Let links navigate normally; no extra handlers needed now that layering is fixed.
+})();
+
+/* ===== Mobile: set CSS var for header height so body can pad correctly ===== */
+(function(){
+  const header = document.querySelector('header');
+  if (!header) return;
+
+  const setHeaderH = () => {
+    const h = header.offsetHeight;
+    document.documentElement.style.setProperty('--header-h', h + 'px');
+  };
+  // Set on load and whenever things might change size
+  window.addEventListener('load', setHeaderH);
+  window.addEventListener('resize', setHeaderH);
+  const ro = new ResizeObserver(setHeaderH);
+  ro.observe(header);
 })();
