@@ -104,32 +104,45 @@ if (form){
 
   toggle.addEventListener('click', (e) => {
     e.stopPropagation();
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    expanded ? close() : open();
+    toggle.getAttribute('aria-expanded') === 'true' ? close() : open();
   });
   closeBtn?.addEventListener('click', (e) => { e.stopPropagation(); close(); });
   backdrop?.addEventListener('click', close);
 
-  // Make link taps navigate and close drawer
+  // Let default navigation proceed; just close the drawer too
   links.forEach(a => {
-    a.addEventListener('click', () => { close(); });
+    a.addEventListener('click', () => { close(); }, { passive:true });
   });
 
-  // Close if user hits ESC or clicks outside the panel
+  // Close on ESC or click outside panel
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
   document.addEventListener('click', (e) => {
     if (!drawer.hidden && !e.target.closest('.mobile-nav-panel') && !e.target.closest('.nav-toggle')) close();
   });
 })();
 
-/* ===== Fixed header height compensation ===== */
+/* ===== Fixed header height compensation (robust) ===== */
 (function(){
   const header = document.querySelector('header');
   if (!header) return;
-  const set = () => {
-    const h = header.offsetHeight;
-    document.body.style.paddingTop = h + 'px';
+
+  let lastH = 0;
+  const setPad = () => {
+    const h = Math.round(header.getBoundingClientRect().height);
+    if (h !== lastH) {
+      document.documentElement.style.setProperty('--header-h', h + 'px');
+      document.body.style.paddingTop = h + 'px';
+      lastH = h;
+    }
   };
-  set();
-  window.addEventListener('resize', set);
+
+  setPad();
+  window.addEventListener('resize', setPad);
+  window.addEventListener('load', setPad);
+
+  // Recalc if the wordmark loads later
+  const logo = document.querySelector('.brand-wordmark');
+  if (logo && !logo.complete) {
+    logo.addEventListener('load', setPad, { once:true });
+  }
 })();
