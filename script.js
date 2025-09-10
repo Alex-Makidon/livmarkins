@@ -9,7 +9,10 @@
   splash.addEventListener('click', finish);
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') finish(); });
 
-  const tryPlay = () => { if (vid.paused) { vid.play().catch(()=>{}); } window.removeEventListener('pointerdown', tryPlay, { passive:true }); };
+  const tryPlay = () => {
+    if (vid.paused) { vid.play().catch(()=>{}); }
+    window.removeEventListener('pointerdown', tryPlay);
+  };
   window.addEventListener('pointerdown', tryPlay, { passive:true });
 
   let safetyTimer = setTimeout(finish, 12000);
@@ -109,5 +112,9 @@ if (form){
   closeBtn?.addEventListener('click', close);
   backdrop?.addEventListener('click', close);
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-  links.forEach(a => a.addEventListener('click', close));
+
+  // IMPORTANT: Let navigation start before closing (fixes iOS Safari swallowing taps)
+  links.forEach(a => a.addEventListener('click', () => {
+    requestAnimationFrame(() => setTimeout(close, 0));
+  }));
 })();
