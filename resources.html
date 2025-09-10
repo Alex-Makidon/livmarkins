@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LivMarkins Insurance — Forms & Resources</title>
+  <meta name="description" content="Download important forms and resources from LivMarkins Insurance.">
+  <link rel="stylesheet" href="styles.css?v=12">
+</head>
+<body>
+  <!-- Splash overlay -->
+  <div id="splash" class="splash">
+    <div class="splash-video-wrap">
+      <video id="splashVideo" class="splash-video" autoplay muted playsinline>
+        <source src="assets/splash.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <script>
+    window.addEventListener('load', function(){
+      var s=document.getElementById('splash');
+      if(s) setTimeout(function(){ s.classList.add('hide'); },7000);
+    });
+  </script>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img src="assets/logo_name.png" alt="LivMarkins Insurance" class="brand-wordmark">
+      </div>
+      <nav class="nav-desktop">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="resources.html" aria-current="page">Forms &amp; Resources</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Drawer -->
+  <div id="mobileNav" class="mobile-nav" hidden>
+    <div class="mobile-nav-panel">
+      <button class="nav-close" aria-label="Close menu">✕</button>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resources.html" aria-current="page">Forms &amp; Resources</a></li>
+      </ul>
+    </div>
+    <div class="mobile-nav-backdrop"></div>
+  </div>
+
+  <!-- Resources -->
+  <section class="section">
+    <div class="container">
+      <h1>Forms &amp; Resources</h1>
+      <div id="pdfList" class="grid ins-list"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div><strong>LivMarkins Insurance</strong><br><small>&copy; <span id="year"></span> LivMarkins. All rights reserved.</small></div>
+      <div><strong>Contact</strong><br><a href="tel:+1234567890">(123) 456-7890</a><br><a href="mailto:info@livmarkins.com">info@livmarkins.com</a></div>
+      <div><strong>Offices</strong><br>123 Main St.<br>Bensalem, PA</div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <script src="script.js?v=12" defer></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LivMarkins Insurance — Coverage with Clarity</title>
+  <meta name="description" content="LivMarkins Insurance offers Health, Life, Home, Auto, Trucking, and Tower Climber coverage with personalized service.">
+  <link rel="stylesheet" href="styles.css?v=12">
+</head>
+<body>
+  <!-- Splash overlay -->
+  <div id="splash" class="splash">
+    <div class="splash-video-wrap">
+      <video id="splashVideo" class="splash-video" autoplay muted playsinline>
+        <source src="assets/splash.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+  <script>
+    // Hard failsafe: hide splash after 7s
+    window.addEventListener('load', function(){
+      var s=document.getElementById('splash');
+      if(s) setTimeout(function(){ s.classList.add('hide'); },7000);
+    });
+  </script>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img src="assets/logo_name.png" alt="LivMarkins Insurance" class="brand-wordmark">
+      </div>
+      <nav class="nav-desktop">
+        <ul>
+          <li><a href="index.html" aria-current="page">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="resources.html">Forms &amp; Resources</a></li>
+        </ul>
+      </nav>
+      <button class="nav-toggle" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Nav Drawer -->
+  <div id="mobileNav" class="mobile-nav" hidden>
+    <div class="mobile-nav-panel">
+      <button class="nav-close" aria-label="Close menu">✕</button>
+      <ul>
+        <li><a href="index.html" aria-current="page">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="resources.html">Forms &amp; Resources</a></li>
+      </ul>
+    </div>
+    <div class="mobile-nav-backdrop"></div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <h1>About LivMarkins Insurance</h1>
+        <p>LivMarkins Insurance helps families and businesses protect what matters—without the jargon. Health, Life, Home &amp; Auto, Trucking, and specialized coverage for Tower Climbers.</p>
+        <div class="cta">
+          <a href="#quote" class="button">Get a Quote</a>
+          <a href="about.html" class="button secondary">About Us</a>
+        </div>
+      </div>
+      <div>
+        <img src="assets/logo_name.png" alt="LivMarkins Full Logo" class="hero-full-logo">
+      </div>
+    </div>
+  </section>
+
+  <!-- Insurance Types -->
+  <section class="section">
+    <div class="container">
+      <h2>What we insure</h2>
+      <div class="grid ins-list">
+        <div class="card"><h3>Health</h3><p>From preventive care to major medical events, the right plan keeps costs predictable.</p></div>
+        <div class="card"><h3>Life</h3><p>Protect your loved ones with policies that provide financial peace of mind.</p></div>
+        <div class="card"><h3>Home &amp; Auto</h3><p>Safeguard your property and vehicles with comprehensive coverage.</p></div>
+        <div class="card"><h3>Trucking</h3><p>Specialized solutions for trucking and tower climber industries.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote Form -->
+  <section class="section" id="quote">
+    <div class="container">
+      <h2>Learn More</h2>
+      <form id="quoteForm">
+        <div class="form-row">
+          <div class="input"><label for="name">Name</label><input type="text" id="name" name="name" required></div>
+          <div class="input"><label for="email">Email</label><input type="email" id="email" name="_replyto" required></div>
+        </div>
+        <div class="input"><label for="coverage">Coverage Type</label>
+          <select id="coverage" name="coverage">
+            <option>Health</option><option>Life</option><option>Home &amp; Auto</option><option>Trucking</option>
+          </select>
+        </div>
+        <div class="input"><label for="message">Message</label><textarea id="message" name="message"></textarea></div>
+        <button type="submit" class="button">Submit</button>
+        <div id="form-status" class="notice hidden"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-grid">
+      <div><strong>LivMarkins Insurance</strong><br><small>&copy; <span id="year"></span> LivMarkins. All rights reserved.</small></div>
+      <div><strong>Contact</strong><br><a href="tel:+1234567890">(123) 456-7890</a><br><a href="mailto:info@livmarkins.com">info@livmarkins.com</a></div>
+      <div><strong>Offices</strong><br>123 Main St.<br>Bensalem, PA</div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+  <script src="script.js?v=12" defer></script>
+</body>
+</html>
