@@ -33,16 +33,18 @@ a:hover{ text-decoration:underline; }
 }
 
 /* ===========================
-   Sticky Header
+   Fixed Header (always at top)
    =========================== */
 header{
-  position: sticky;            /* stays at top while scrolling */
-  top: 0;
-  z-index: 1000;               /* sit above content */
-  background: var(--white);    /* solid background */
+  position:fixed;      /* force stay-on-top */
+  top:0; left:0; right:0;
+  z-index:20000;       /* above everything */
+  background:var(--white);
   border-bottom:1px solid #e8e4dd;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  box-shadow:0 2px 6px rgba(0,0,0,0.06);
 }
+body{ padding-top:80px; } /* JS will correct this to exact height */
+
 .nav{
   display:flex;
   align-items:center;
@@ -60,10 +62,7 @@ nav ul{
 }
 nav a{ padding:8px 10px; border-radius:10px; }
 nav a.active, nav a:hover{ background:#eef1ec; text-decoration:none; }
-nav a:focus-visible{
-  outline:2px solid var(--sage);
-  outline-offset:2px;
-}
+nav a:focus-visible{ outline:2px solid var(--sage); outline-offset:2px; }
 
 /* Hero */
 .hero{
@@ -243,7 +242,7 @@ small, .muted{ color:#6b6b6b; }
   header .brand img.brand-wordmark{ height:48px; max-height:50px; width:auto; object-fit:contain; display:block; }
 
   .mobile-nav[hidden]{ display:none; }
-  .mobile-nav{ position:fixed; inset:0; z-index:10000; }
+  .mobile-nav{ position:fixed; inset:0; z-index:21000; } /* above header */
   .mobile-nav-backdrop{
     position:absolute; inset:0; background:rgba(0,0,0,.28);
     opacity:0; pointer-events:none; transition:opacity .2s ease;
@@ -253,7 +252,7 @@ small, .muted{ color:#6b6b6b; }
     background:#fff; border-left:1px solid #e8e4dd;
     transform:translateX(100%); transition:transform .25s ease;
     display:flex; flex-direction:column; padding:16px 14px;
-    box-shadow:-8px 0 24px rgba(0,0,0,.08);
+    box-shadow:-8px 0 24px rgba(0,0,0,.12);
   }
 
   .mobile-nav .nav-close{
