@@ -528,3 +528,10 @@ Copy code
   <script src="script.js?v=10" defer></script>
 </body>
 </html>
+
+// After calling finish(), remove splash from layout once fade completes
+splash.addEventListener('transitionend', function (e) {
+  if (e.target === splash && splash.classList.contains('hide')) {
+    splash.style.display = 'none';
+  }
+}, false);
