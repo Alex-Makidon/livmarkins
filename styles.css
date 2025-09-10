@@ -254,7 +254,9 @@ small, .muted{ color:#6b6b6b; }
 
   .mobile-nav[hidden]{ display:none; }
   .mobile-nav{ position:fixed; inset:0; z-index:10000; }
-
+/* Keep list above the CTA if they ever overlap */
+.mobile-nav ul { position: relative; z-index: 2; }
+.mobile-cta    { position: relative; z-index: 1; }   
   /* Backdrop behind panel */
   .mobile-nav-backdrop{
     position:absolute; inset:0; background:rgba(0,0,0,.28);
