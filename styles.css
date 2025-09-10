@@ -223,7 +223,41 @@ small, .muted{ color:#6b6b6b; }
   .splash-video{ display:none !important; }
   .accordion-panel{ max-height:none !important; }
 }
+/* Smooth vanish for the splash */
+.splash{
+  opacity:1;
+  transition:
+    opacity .45s ease,
+    visibility .45s ease;
+}
 
+/* While fading, gently blur/scale the video for a nice “dissolve” */
+.splash .splash-video{
+  transition: transform .45s ease, filter .45s ease, opacity .45s ease;
+  will-change: transform, filter, opacity;
+}
+
+.splash.hide{
+  opacity:0;
+  visibility:hidden;         /* avoids layout jump */
+  pointer-events:none;
+}
+
+.splash.hide .splash-video{
+  transform: scale(1.02);     /* tiny nudge adds polish */
+  filter: blur(2px);
+  opacity:.9;                 /* optional, keeps it soft */
+}
+
+/* Make header fade in the moment splash starts to go */
+header{
+  transition: opacity .35s ease;
+}
+.splash:not(.hide) ~ header{
+  opacity:0;
+  visibility:hidden;          /* keep taps off while splash is up */
+  pointer-events:none;
+}
 /* ===========================
    Responsive
    =========================== */
