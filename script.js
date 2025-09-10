@@ -91,10 +91,9 @@ if (form){
 
   const closeBtn = drawer.querySelector('.nav-close');
   const backdrop = drawer.querySelector('.mobile-nav-backdrop');
-  const links = Array.from(drawer.querySelectorAll('a'));
   const panel = drawer.querySelector('.mobile-nav-panel');
 
-  // Bottom CTAs → now link to quote.html so it works from any page
+  // Bottom CTAs (Get a Quote / Call) – inject if missing
   if (panel && !panel.querySelector('.mobile-cta')) {
     const cta = document.createElement('div');
     cta.className = 'mobile-cta';
@@ -106,22 +105,30 @@ if (form){
   }
 
   const open = () => {
+    // Guard: only act if currently hidden/closed
+    if (!drawer.hidden) return;
     drawer.hidden = false;
     document.body.classList.add('menu-open');
     toggle.setAttribute('aria-expanded', 'true');
-    setTimeout(() => { links[0]?.focus(); }, 0);
   };
+
   const close = (focusToggle = true) => {
+    if (drawer.hidden) return;
     document.body.classList.remove('menu-open');
     toggle.setAttribute('aria-expanded', 'false');
     drawer.hidden = true;
     if (focusToggle) toggle.focus();
   };
 
-  toggle.addEventListener('click', () => {
+  // Some devices fire different events; listen to both.
+  const onTogglePress = (e) => {
+    e.preventDefault();
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
     expanded ? close() : open();
-  });
+  };
+  toggle.addEventListener('click', onTogglePress);
+  toggle.addEventListener('pointerup', onTogglePress, { passive: false });
+
   closeBtn?.addEventListener('click', () => close());
   backdrop?.addEventListener('click', () => close());
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
@@ -134,8 +141,10 @@ if (form){
       requestAnimationFrame(() => { window.location.href = 'quote.html'; });
     });
   });
-})();
 
+  // Make sure taps on the panel do not bleed to the backdrop/toggle
+  panel?.addEventListener('click', (e) => { e.stopPropagation(); }, true);
+})();
 /* ===== Mobile: set CSS var for header height ===== */
 (function(){
   const header = document.querySelector('header');
