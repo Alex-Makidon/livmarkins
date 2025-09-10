@@ -1,17 +1,76 @@
-/* ===== Splash (very compatible, v12) ===== */
+/* ===== Splash (Home-only, once per tab) — v13 ===== */
 (function () {
   var splash = document.getElementById('splash');
   var vid = document.getElementById('splashVideo');
   if (!splash || !vid) return;
+
+  // detect if we are on index and if we should show intro
+  function getParams() {
+    var p = {}, q = location.search.replace(/^\?/, '').split('&');
+    for (var i=0;i<q.length;i++){
+      var kv = q[i].split('=');
+      if (kv[0]) p[decodeURIComponent(kv[0])] = decodeURIComponent(kv[1] || '');
+    }
+    return p;
+  }
+  var onIndex = /(?:^|\/)(index\.html)?$/.test(location.pathname); // /, /index.html
+  var params = getParams();
+  var forceIntro = params.intro === '1';
+  var seen = false;
+  try { seen = sessionStorage.getItem('seenSplash') === '1'; } catch(e){}
+
+  var shouldShow = onIndex && (forceIntro || !seen);
+
+  if (!shouldShow) {
+    // Don’t run splash at all
+    splash.classList.add('hide');
+    splash.style.display = 'none';
+    return;
+  }
 
   var finished = false;
   function finish() {
     if (finished) return;
     finished = true;
     if (!splash.classList.contains('hide')) splash.classList.add('hide');
+    try { sessionStorage.setItem('seenSplash', '1'); } catch(e){}
   }
 
-  // Remove from layout after fade transition
+  splash.addEventListener('transitionend', function (e) {
+    if (e && e.target === splash && splash.classList.contains('hide')) {
+      splash.style.display = 'none';
+    }
+  }, false);
+
+  vid.addEventListener('ended', finish, false);
+  splash.addEventListener('click', finish, false);
+  window.addEventListener('keydown', function (e) { if (e && e.key === 'Escape') finish(); }, false);
+
+  function tryPlay() {
+    if (vid.paused) { try { vid.play(); } catch (e) {} }
+    window.removeEventListener('pointerdown', tryPlay, false);
+    window.removeEventListener('touchstart', tryPlay, false);
+  }
+  window.addEventListener('pointerdown', tryPlay, false);
+  window.addEventListener('touchstart', tryPlay, false);
+
+  var hardTimer = setTimeout(finish, 10000);
+  function setDurationTimer() {
+    if (finished) return;
+    clearTimeout(hardTimer);
+    var dur = (isFinite(vid.duration) && vid.duration > 0) ? vid.duration : 6;
+    var ms = Math.min((dur * 1000) + 800, 10000);
+    hardTimer = setTimeout(finish, ms);
+  }
+  if (isFinite(vid.duration) && vid.duration > 0) setDurationTimer();
+  else vid.addEventListener('loadedmetadata', setDurationTimer, false);
+
+  vid.addEventListener('error', function(){ setTimeout(finish, 1200); }, false);
+  vid.addEventListener('stalled', function(){ setTimeout(finish, 2000); }, false);
+  document.addEventListener('visibilitychange', function(){
+    if (document.visibilityState === 'visible' && !finished) tryPlay();
+  }, false);
+})();  // Remove from layout after fade transition
   splash.addEventListener('transitionend', function (e) {
     if (e && e.target === splash && splash.classList.contains('hide')) {
       splash.style.display = 'none';
