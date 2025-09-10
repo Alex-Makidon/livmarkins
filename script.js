@@ -98,33 +98,39 @@ if (form){
     toggle.setAttribute('aria-expanded', 'true');
     setTimeout(() => { links[0]?.focus(); }, 0);
   };
-  const close = () => {
+  const close = (focusToggle = true) => {
     document.body.classList.remove('menu-open');
     toggle.setAttribute('aria-expanded', 'false');
     drawer.hidden = true;
+    if (focusToggle) toggle.focus();
   };
 
   toggle.addEventListener('click', () => {
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
     expanded ? close() : open();
   });
-  closeBtn?.addEventListener('click', () => { close(); toggle.focus(); });
-  backdrop?.addEventListener('click', () => { close(); toggle.focus(); });
-  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') { close(); toggle.focus(); } });
+  closeBtn?.addEventListener('click', () => close());
+  backdrop?.addEventListener('click', () => close());
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-  // Robust iOS fix: navigate explicitly after closing (no focus steal during tap)
-  links.forEach(a => a.addEventListener('click', (e) => {
-    const href = a.getAttribute('href') || '';
+  // Unified tap handler: triggers on touchend or click, then navigates reliably
+  function handleNavTap(ev, href){
     if (!href) return;
+    // In-page anchor? just close and let default behavior work.
+    if (href.startsWith('#')) { close(false); return; }
 
-    // In-page anchor: let default happen, just close.
-    if (href.startsWith('#')) { close(); return; }
-
-    e.preventDefault();               // prevent iOS from swallowing the tap
+    ev.preventDefault();
+    // Don’t steal focus during the tap; close the drawer quietly.
     requestAnimationFrame(() => {
-      close();                        // close without focusing toggle
-      // Kick off navigation after drawer state settles
+      close(false);
       setTimeout(() => { window.location.href = href; }, 0);
     });
-  }));
+  }
+
+  links.forEach(a => {
+    const href = a.getAttribute('href') || '';
+    // Touch first (Chrome iOS & Safari), then click fallback.
+    a.addEventListener('touchend', (e) => handleNavTap(e, href), { passive:false });
+    a.addEventListener('click', (e) => handleNavTap(e, href));
+  });
 })();
