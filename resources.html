@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Forms & Resources — LivMarkins Insurance</title>
-  <meta name="description" content="Download client forms and helpful resources from LivMarkins Insurance."/>
+  <title>Get a Quote — LivMarkins Insurance</title>
+  <meta name="description" content="Request an insurance quote from LivMarkins Insurance. We’ll follow up within one business day."/>
   <meta property="og:image" content="https://alex-makidon.github.io/livmarkins/assets/share-image.png?v=5">
   <link rel="stylesheet" href="styles.css?cachebust"/>
 </head>
@@ -19,8 +19,8 @@
         <ul>
           <li><a href="index.html" class="home-link">Home</a></li>
           <li><a href="about.html" class="about-link">About</a></li>
-          <li><a href="quote.html" class="quote-link">Get a Quote</a></li>
-          <li><a href="resources.html" class="res-link active" aria-current="page">Forms&nbsp;&amp;&nbsp;Resources</a></li>
+          <li><a href="quote.html" class="quote-link active" aria-current="page">Get a Quote</a></li>
+          <li><a href="resources.html" class="res-link">Forms&nbsp;&amp;&nbsp;Resources</a></li>
         </ul>
       </nav>
 
@@ -35,8 +35,8 @@
         <ul>
           <li><a href="index.html" class="home-link">Home</a></li>
           <li><a href="about.html" class="about-link">About</a></li>
-          <li><a href="quote.html" class="quote-link">Get a Quote</a></li>
-          <li><a href="resources.html" class="res-link" aria-current="page">Forms &amp; Resources</a></li>
+          <li><a href="quote.html" class="quote-link" aria-current="page">Get a Quote</a></li>
+          <li><a href="resources.html" class="res-link">Forms &amp; Resources</a></li>
         </ul>
       </div>
       <div class="mobile-nav-backdrop"></div>
@@ -46,17 +46,59 @@
   <section class="hero">
     <div class="container hero-inner">
       <div>
-        <img src="assets/logo.png" alt="LivMarkins Insurance" class="hero-full-logo"/>
-        <h1>Forms & Resources</h1>
-        <p>Here you can access important forms, applications, and client resources. Download what you need,
-           or contact us if you’re not sure which form is right for your situation.</p>
+        <img src="assets/logo.png" alt="LivMarkins Insurance" class="hero-full-logo" width="512" height="512"/>
+        <h1>Get a Quote</h1>
+        <p>Complete this form and we’ll follow up within one business day.</p>
       </div>
       <div class="card">
-        <h3>Available Downloads</h3>
-        <div id="pdfList" class="grid ins-list">
-          <div class="muted">No resources yet. Check back soon.</div>
-        </div>
+        <h3>Quick Start</h3>
+        <p class="muted">Tell us the basics—name, contact, and what you’d like quoted. We’ll handle the rest.</p>
       </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div id="form-status" class="notice hidden" role="status" aria-live="polite"></div>
+
+      <form id="quoteForm" action="https://formspree.io/f/your-form-id" method="POST" novalidate>
+        <div class="form-row">
+          <div class="input">
+            <label for="name">Full Name *</label>
+            <input id="name" name="name" type="text" required autocomplete="name"/>
+          </div>
+          <div class="input">
+            <label for="phone">Phone *</label>
+            <input id="phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" pattern="^[0-9()+\\-.\\s]{7,}$"/>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="input">
+            <label for="email">Email *</label>
+            <input id="email" name="email" type="email" required autocomplete="email" inputmode="email"/>
+          </div>
+          <div class="input">
+            <label for="type">Insurance Type *</label>
+            <select id="type" name="insurance_type" required>
+              <option value="">Select one</option>
+              <option>Health</option>
+              <option>Life</option>
+              <option>Home</option>
+              <option>Auto</option>
+              <option>Trucking</option>
+              <option>Tower Climbers</option>
+            </select>
+          </div>
+        </div>
+        <div class="input">
+          <label for="message">Notes</label>
+          <textarea id="message" name="message" rows="4" placeholder="Tell us a bit about your needs (drivers, property, business, etc.)"></textarea>
+        </div>
+        <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <button class="button" type="submit">Submit</button>
+      </form>
+
+      <p class="muted" style="margin-top:8px">Prefer phone? Call <a href="tel:+12155155975"><strong>215-515-5975</strong></a>.</p>
     </div>
   </section>
 
