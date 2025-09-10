@@ -102,12 +102,34 @@ if (form){
     toggle.focus();
   };
 
-  toggle.addEventListener('click', () => {
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
     const expanded = toggle.getAttribute('aria-expanded') === 'true';
     expanded ? close() : open();
   });
-  closeBtn?.addEventListener('click', close);
+  closeBtn?.addEventListener('click', (e) => { e.stopPropagation(); close(); });
   backdrop?.addEventListener('click', close);
+
+  // Make link taps navigate and close drawer
+  links.forEach(a => {
+    a.addEventListener('click', () => { close(); });
+  });
+
+  // Close if user hits ESC or clicks outside the panel
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-  links.forEach(a => a.addEventListener('click', close));
+  document.addEventListener('click', (e) => {
+    if (!drawer.hidden && !e.target.closest('.mobile-nav-panel') && !e.target.closest('.nav-toggle')) close();
+  });
+})();
+
+/* ===== Fixed header height compensation ===== */
+(function(){
+  const header = document.querySelector('header');
+  if (!header) return;
+  const set = () => {
+    const h = header.offsetHeight;
+    document.body.style.paddingTop = h + 'px';
+  };
+  set();
+  window.addEventListener('resize', set);
 })();
