@@ -1,5 +1,6 @@
 /* ===== Splash ===== */
 (function () {
+  // Keep existing splash on Home only
   const splash = document.getElementById('splash');
   const vid = document.getElementById('splashVideo');
   if (!splash || !vid) return;
@@ -93,13 +94,12 @@ if (form){
   const links = Array.from(drawer.querySelectorAll('a'));
   const panel = drawer.querySelector('.mobile-nav-panel');
 
-  // --- Add bottom CTAs if missing ---
+  // Bottom CTAs → now link to quote.html so it works from any page
   if (panel && !panel.querySelector('.mobile-cta')) {
     const cta = document.createElement('div');
     cta.className = 'mobile-cta';
-    // Use index.html#quote so it works from any page
     cta.innerHTML = `
-      <a class="button" href="index.html#quote">Get a Quote</a>
+      <a class="button" href="quote.html">Get a Quote</a>
       <a class="button secondary" href="tel:+12155155975">Call Now</a>
     `;
     panel.appendChild(cta);
@@ -126,47 +126,17 @@ if (form){
   backdrop?.addEventListener('click', () => close());
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-  // Handle in-page anchors / quote CTA so the drawer closes first
-  const allDrawerLinks = Array.from(drawer.querySelectorAll('a'));
-  allDrawerLinks.forEach(a => {
-    const href = a.getAttribute('href') || '';
-
-    // Get a Quote from any page:
-    if (href.includes('#quote')) {
-      a.addEventListener('click', (e) => {
-        e.preventDefault();
-        const onHome = /(^|\/)(index\.html)?$/.test(location.pathname);
-        close(false);
-        requestAnimationFrame(() => {
-          if (onHome) {
-            // Smooth-scroll on Home
-            const el = document.getElementById('quote');
-            if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
-          } else {
-            // Navigate to Home with hash
-            window.location.href = 'index.html#quote';
-          }
-        });
-      });
-      return;
-    }
-
-    // Generic in-page hash links (if you add more later)
-    if (href.startsWith('#')) {
-      a.addEventListener('click', (e) => {
-        e.preventDefault();
-        close(false);
-        const id = href.slice(1);
-        requestAnimationFrame(() => {
-          const el = document.getElementById(id);
-          if (el) el.scrollIntoView({ behavior:'smooth', block:'start' });
-        });
-      });
-    }
+  // Close drawer before navigating to quote.html (nice polish)
+  drawer.querySelectorAll('a[href="quote.html"]').forEach(a => {
+    a.addEventListener('click', (e) => {
+      e.preventDefault();
+      close(false);
+      requestAnimationFrame(() => { window.location.href = 'quote.html'; });
+    });
   });
 })();
 
-/* ===== Mobile: set CSS var for header height so body can pad correctly ===== */
+/* ===== Mobile: set CSS var for header height ===== */
 (function(){
   const header = document.querySelector('header');
   if (!header) return;
