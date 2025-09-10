@@ -1,0 +1,9 @@
+
+/* v13 splash/mobile fixes */
+@media (max-width: 820px){
+  #splash{ display:none !important; }
+}
+.no-splash #splash{ display:none !important; }
+@media (max-width: 820px){
+  .hero-full-logo{ width:min(520px, 92%); height:auto; }
+}
