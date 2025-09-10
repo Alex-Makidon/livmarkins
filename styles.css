@@ -34,11 +34,12 @@ a:hover{ text-decoration:underline; }
 
 /* Header */
 header{
-  background:var(--white);
-  border-bottom:1px solid #e8e4dd;
-  position:sticky;
-  top:0;
-  z-index:50;
+  position: -webkit-sticky; /* iOS Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1000;            /* keep above page content */
+  background: var(--white);
+  border-bottom: 1px solid #e8e4dd;
 }
 .nav{
   display:flex;
