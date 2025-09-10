@@ -314,6 +314,8 @@ small, .muted{ color:#6b6b6b; }
   body.menu-open .mobile-nav-backdrop{ opacity:1; pointer-events:auto; }
   body.menu-open .mobile-nav-panel{ transform:translateX(0); }
 }
+/* Ensure the hamburger stays clickable above everything (iOS/Safari overlap fix) */
+.nav-toggle { position: relative; z-index: 10001; }
 
 /* Desktop header logo size */
 header .brand img.brand-wordmark{
