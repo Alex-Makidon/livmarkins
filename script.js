@@ -1,6 +1,5 @@
 /* ===== Splash ===== */
 (function () {
-  // Keep existing splash on Home only
   const splash = document.getElementById('splash');
   const vid = document.getElementById('splashVideo');
   if (!splash || !vid) return;
@@ -10,10 +9,7 @@
   splash.addEventListener('click', finish);
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') finish(); });
 
-  const tryPlay = () => {
-    if (vid.paused) { vid.play().catch(()=>{}); }
-    window.removeEventListener('pointerdown', tryPlay);
-  };
+  const tryPlay = () => { if (vid.paused) { vid.play().catch(()=>{}); } window.removeEventListener('pointerdown', tryPlay, { passive:true }); };
   window.addEventListener('pointerdown', tryPlay, { passive:true });
 
   let safetyTimer = setTimeout(finish, 12000);
@@ -83,17 +79,17 @@ if (form){
   }
 })();
 
-/* ===== Mobile burger nav ===== */
+/* ===== Mobile burger nav (robust) ===== */
 (function () {
-  const toggle = document.querySelector('.nav-toggle');
   const drawer = document.getElementById('mobileNav');
-  if (!toggle || !drawer) return;
+  const toggle = document.querySelector('.nav-toggle');
+  if (!drawer || !toggle) return;
 
+  const panel = drawer.querySelector('.mobile-nav-panel');
   const closeBtn = drawer.querySelector('.nav-close');
   const backdrop = drawer.querySelector('.mobile-nav-backdrop');
-  const panel = drawer.querySelector('.mobile-nav-panel');
 
-  // Bottom CTAs (Get a Quote / Call) – inject if missing
+  // Inject bottom CTAs once
   if (panel && !panel.querySelector('.mobile-cta')) {
     const cta = document.createElement('div');
     cta.className = 'mobile-cta';
@@ -105,13 +101,11 @@ if (form){
   }
 
   const open = () => {
-    // Guard: only act if currently hidden/closed
     if (!drawer.hidden) return;
     drawer.hidden = false;
     document.body.classList.add('menu-open');
     toggle.setAttribute('aria-expanded', 'true');
   };
-
   const close = (focusToggle = true) => {
     if (drawer.hidden) return;
     document.body.classList.remove('menu-open');
@@ -120,20 +114,23 @@ if (form){
     if (focusToggle) toggle.focus();
   };
 
-  // Some devices fire different events; listen to both.
-  const onTogglePress = (e) => {
+  // Event delegation so taps always work (even if something overlaps)
+  const onAnyTogglePress = (e) => {
+    const btn = e.target.closest('.nav-toggle');
+    if (!btn) return;
     e.preventDefault();
-    const expanded = toggle.getAttribute('aria-expanded') === 'true';
-    expanded ? close() : open();
+    e.stopPropagation();
+    (toggle.getAttribute('aria-expanded') === 'true') ? close() : open();
   };
-  toggle.addEventListener('click', onTogglePress);
-  toggle.addEventListener('pointerup', onTogglePress, { passive: false });
+  ['click','pointerup','touchend'].forEach(ev => {
+    document.addEventListener(ev, onAnyTogglePress, { passive: false });
+  });
 
   closeBtn?.addEventListener('click', () => close());
   backdrop?.addEventListener('click', () => close());
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-  // Close drawer before navigating to quote.html (nice polish)
+  // Close before navigating to Quote (polish)
   drawer.querySelectorAll('a[href="quote.html"]').forEach(a => {
     a.addEventListener('click', (e) => {
       e.preventDefault();
@@ -142,20 +139,6 @@ if (form){
     });
   });
 
-  // Make sure taps on the panel do not bleed to the backdrop/toggle
+  // Prevent clicks inside panel from leaking
   panel?.addEventListener('click', (e) => { e.stopPropagation(); }, true);
-})();
-/* ===== Mobile: set CSS var for header height ===== */
-(function(){
-  const header = document.querySelector('header');
-  if (!header) return;
-
-  const setHeaderH = () => {
-    const h = header.offsetHeight;
-    document.documentElement.style.setProperty('--header-h', h + 'px');
-  };
-  window.addEventListener('load', setHeaderH);
-  window.addEventListener('resize', setHeaderH);
-  const ro = new ResizeObserver(setHeaderH);
-  ro.observe(header);
 })();
