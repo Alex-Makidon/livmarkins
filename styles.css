@@ -343,3 +343,31 @@ header .brand img.brand-wordmark{
   object-fit:contain;
   display:block;
 }
+/* --- Mobile-only: pin the hamburger so nothing can overlap it (About fix) --- */
+@media (max-width: 820px){
+  /* Reserve a bit of right padding so the fixed button doesn't feel cramped */
+  header .container.nav { padding-right: 60px; }
+
+  /* Fix the hamburger to the top-right above all content */
+  .nav-toggle{
+    position: fixed;
+    top: 12px;                 /* adjust if you want it higher/lower */
+    right: 16px;
+    z-index: 40000;            /* higher than drawer/panels */
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* When the drawer is open, hide the fixed hamburger (prevents “double” icon) */
+  body.menu-open .nav-toggle{
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  /* Drawer stacking stays just below the toggle */
+  .mobile-nav        { z-index: 30000; }
+  .mobile-nav-panel  { z-index: 30000; }
+  .mobile-nav-backdrop { z-index: 29999; }
+
+  /* Defensive: nothing in hero creates a stacking context that could eat taps */
+  .hero, .hero * { transform: none !important; }
+}
