@@ -19,6 +19,7 @@ html, body{
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Helvetica,Arial,sans-serif;
   color:var(--charcoal);
   background:var(--stone);
+  overflow-x:hidden; /* Safety: no horizontal scroll */
 }
 
 /* Links */
@@ -32,14 +33,14 @@ a:hover{ text-decoration:underline; }
   padding:24px;
 }
 
-/* Header */
+/* Header (desktop defaults) */
 header{
-  position: -webkit-sticky; /* iOS Safari */
-  position: sticky;
-  top: 0;
-  z-index: 1000;            /* keep above page content */
-  background: var(--white);
-  border-bottom: 1px solid #e8e4dd;
+  position:-webkit-sticky; /* iOS Safari */
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:var(--white);
+  border-bottom:1px solid #e8e4dd;
 }
 .nav{
   display:flex;
@@ -221,6 +222,15 @@ small, .muted{ color:#6b6b6b; }
   .form-row{ grid-template-columns:1fr; }
   .container{ padding-left:20px; padding-right:20px; }
   .hero-full-logo{ width:clamp(180px,60vw,300px); }
+
+  /* Fix header to top on mobile and reserve space */
+  header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:1000;
+    box-shadow:0 2px 8px rgba(0,0,0,.04);
+  }
+  body{ padding-top:var(--header-h, 96px); }
 }
 
 /* ===========================
@@ -229,32 +239,32 @@ small, .muted{ color:#6b6b6b; }
 .nav-toggle{ display:none; }
 
 @media (max-width:820px){
-  header{
-    position:fixed;
-    top:0; left:0; right:0;
-    z-index:1000;
-    box-shadow:0 2px 8px rgba(0,0,0,.04);
-  }
-  body{ padding-top:var(--header-h, 96px); }
-
   .nav-desktop{ display:none; }
+
   .nav-toggle{
-    display:inline-flex; flex-direction:column; gap:4px;
-    width:40px; height:40px; align-items:center; justify-content:center;
+    display:inline-flex;
+    flex-direction:column;
+    gap:4px;
+    width:40px; height:40px;
+    align-items:center; justify-content:center;
     border:1px solid #e5e1d8; border-radius:10px; background:#fff;
+    position:relative;
+    z-index:30001; /* always above page content */
+    -webkit-tap-highlight-color:transparent; /* remove iOS blue tap blob */
   }
-  .nav-toggle .bar{ display:block; width:18px; height:2px; background:#2F2F2F; border-radius:2px; }
+  .nav-toggle .bar{
+    display:block; width:18px; height:2px; background:#2F2F2F; border-radius:2px;
+  }
 
   header .container.nav{ gap:12px; padding-left:12px; padding-right:12px; }
   header .brand img.brand-wordmark{ height:48px; max-height:50px; width:auto; object-fit:contain; display:block; }
 
   .mobile-nav[hidden]{ display:none; }
-  .mobile-nav{ position:fixed; inset:0; z-index:10000; }
-
+  .mobile-nav{ position:fixed; inset:0; z-index:30000; }
   .mobile-nav-backdrop{
     position:absolute; inset:0; background:rgba(0,0,0,.28);
     opacity:0; pointer-events:none; transition:opacity .2s ease;
-    z-index:1;
+    z-index:29999;
   }
   .mobile-nav-panel{
     position:absolute; top:0; right:0; height:100%; width:min(82vw,340px);
@@ -263,7 +273,7 @@ small, .muted{ color:#6b6b6b; }
     display:flex; flex-direction:column;
     padding:16px 14px max(20px, env(safe-area-inset-bottom));
     box-shadow:-8px 0 24px rgba(0,0,0,.08);
-    z-index:2;
+    z-index:30000;
   }
 
   .mobile-nav .nav-close{
@@ -298,7 +308,7 @@ small, .muted{ color:#6b6b6b; }
     border-color:#5c755a;
   }
 
-  /* CTA area fixed to bottom */
+  /* CTA area fixed to bottom; only buttons accept taps */
   .mobile-cta{
     margin-top:auto;
     display:grid; gap:10px;
@@ -310,12 +320,20 @@ small, .muted{ color:#6b6b6b; }
   }
   .mobile-cta .button{ pointer-events:auto; text-align:center; }
 
+  /* Hide the hamburger while the drawer is open (prevents “double icon”) */
+  body.menu-open .nav-toggle{
+    visibility:hidden;
+    pointer-events:none;
+  }
+
+  /* Drawer visible state */
   body.menu-open{ overflow:hidden; }
   body.menu-open .mobile-nav-backdrop{ opacity:1; pointer-events:auto; }
   body.menu-open .mobile-nav-panel{ transform:translateX(0); }
+
+  /* Defensive: pages shouldn’t block taps via transforms on mobile */
+  .hero, .hero * { transform:none !important; }
 }
-/* Ensure the hamburger stays clickable above everything (iOS/Safari overlap fix) */
-.nav-toggle { position: relative; z-index: 10001; }
 
 /* Desktop header logo size */
 header .brand img.brand-wordmark{
@@ -324,22 +342,4 @@ header .brand img.brand-wordmark{
   width:auto;
   object-fit:contain;
   display:block;
-}
-
-/* Safety: no horizontal scroll */
-html, body{ overflow-x:hidden; }
-
-/* keep the hamburger visible & tappable, but hide it while the menu is open (prevents double icon) */
-.nav-toggle { position: relative; z-index: 30001; }
-body.menu-open .nav-toggle { visibility: hidden; pointer-events: none; }
-
-/* absolute safety: drawer always sits above page content */
-.mobile-nav { z-index: 30000; }
-.mobile-nav-backdrop { z-index: 29999; }
-.mobile-nav-panel { z-index: 30000; }
-
-/* Hide the header hamburger while the drawer is open */
-body.menu-open .nav-toggle {
-  visibility: hidden;   /* keeps layout stable */
-  pointer-events: none; /* extra safety */
 }
