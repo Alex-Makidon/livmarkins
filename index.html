@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>LivMarkins Insurance — Coverage with Clarity</title>
+  <meta name="description" content="LivMarkins Insurance offers Health, Life, Home, Auto, Trucking, and Tower Climber coverage with personalized service."/>
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="LivMarkins Insurance">
+  <meta property="og:title" content="LivMarkins Insurance — Coverage with Clarity">
+  <meta property="og:description" content="Helping families and businesses protect what matters — Health, Life, Home & Auto, Trucking, and Tower Climbers coverage.">
+  <meta property="og:url" content="https://alex-makidon.github.io/livmarkins/">
+  <meta property="og:image" content="https://alex-makidon.github.io/livmarkins/assets/share-image.png?v=5">
+
+  <link rel="icon" type="image/png" href="assets/favicon.png?v=5">
+  <link rel="stylesheet" href="styles.css?cachebust"/>
+</head>
+<body>
+  <!-- Splash -->
+  <div id="splash" class="splash" aria-hidden="true">
+    <div class="splash-video-wrap">
+      <video id="splashVideo" class="splash-video" autoplay muted playsinline preload="metadata" poster="assets/splash_poster.jpg">
+        <source src="assets/splash.webm" type="video/webm"/>
+        <source src="assets/splash.mp4" type="video/mp4"/>
+        <img src="assets/logo.png" alt="">
+      </video>
+      <noscript><img src="assets/splash_poster.jpg" alt="LivMarkins splash"></noscript>
+    </div>
+  </div>
+
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <img src="assets/logo_name.png?v=5" alt="LivMarkins" class="brand-wordmark"/>
+      </div>
+
+      <nav class="nav-desktop" aria-label="Primary">
+        <ul>
+          <li><a href="index.html" class="home-link active" aria-current="page">Home</a></li>
+          <li><a href="about.html" class="about-link">About</a></li>
+          <li><a href="quote.html" class="quote-link">Get a Quote</a></li>
+          <li><a href="resources.html" class="res-link">Forms&nbsp;&amp;&nbsp;Resources</a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </button>
+    </div>
+
+    <div id="mobileNav" class="mobile-nav" hidden>
+      <div class="mobile-nav-panel">
+        <button class="nav-close" aria-label="Close menu">✕</button>
+        <ul>
+          <li><a href="index.html" class="home-link" aria-current="page">Home</a></li>
+          <li><a href="about.html" class="about-link">About</a></li>
+          <li><a href="resources.html" class="res-link">Forms &amp; Resources</a></li>
+        </ul>
+      </div>
+      <div class="mobile-nav-backdrop"></div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <img src="assets/logo.png" alt="LivMarkins Insurance" class="hero-full-logo"/>
+        <h1>Coverage that fits your life.</h1>
+        <p>LivMarkins Insurance helps families and businesses protect what matters—without the jargon.
+           Health, Life, Home &amp; Auto, Trucking, and specialized coverage for Tower Climbers.</p>
+        <div class="cta">
+          <a class="button" href="quote.html">Get a Quote</a>
+          <a class="button secondary" href="about.html">About Us</a>
+        </div>
+      </div>
+
+      <aside class="card accordion-panel" aria-label="Why Insurance">
+        <span class="badge">Why Insurance?</span>
+        <p>Insurance transfers risk—from you to your carrier—so one unexpected event doesn’t become a financial crisis.</p>
+
+        <details open><summary>Health</summary><p>From preventive care to major medical events, the right plan keeps costs predictable.</p></details>
+        <details><summary>Life</summary><p>Protect your family or partners with income replacement, debt coverage, and legacy planning.</p></details>
+        <details><summary>Home &amp; Auto</summary><p>Home policies cover dwelling, personal property, and liability. Auto policies protect against collision, comprehensive, and liability events.</p></details>
+        <details><summary>Trucking</summary><p>Meets requirements and protects your rig, cargo, and liability exposures—vital for owner-operators and fleets.</p></details>
+        <details><summary>Tower Climbers</summary><p>Specialized coverage for high-risk work: workers’ comp, liability, and equipment.</p></details>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2>What we insure</h2>
+      <div class="grid ins-list">
+        <div class="card"><h3>Health</h3><p>Plans for individuals, families, and small businesses.</p></div>
+        <div class="card"><h3>Life</h3><p>Term and whole life options for income protection and legacy.</p></div>
+        <div class="card"><h3>Home</h3><p>Protection for your home, belongings, and personal liability.</p></div>
+        <div class="card"><h3>Auto</h3><p>Liability, collision, comprehensive, and more—built around your driving needs.</p></div>
+        <div class="card"><h3>Trucking</h3><p>Primary liability, physical damage, cargo, and non-trucking liability.</p></div>
+        <div class="card"><h3>Tower Climbers</h3><p>Tailored coverage for high-risk operations and equipment.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><strong>LivMarkins Insurance</strong><br/><span class="muted">Phone: <a href="tel:+12155155975">215-515-5975</a></span></div>
+      <div><strong>Lines We Cover</strong><ul class="muted"><li>Health</li><li>Life</li><li>Home &amp; Auto</li><li>Trucking</li><li>Tower Climbers</li></ul></div>
+      <div><strong>Company</strong><ul class="muted"><li><a href="about.html">About Us</a></li><li><a href="quote.html">Get a Quote</a></li><li><a href="resources.html">Forms &amp; Resources</a></li></ul></div>
+    </div>
+    <div class="container"><small>© <span id="year"></span> LivMarkins Insurance.</small></div>
+  </footer>
+
+  <script>document.getElementById('year').textContent=new Date().getFullYear()</script>
+  <script src="script.js?cachebust" defer></script>
+</body>
+</html>
