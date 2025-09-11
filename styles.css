@@ -337,3 +337,9 @@ body.menu-open .nav-toggle { visibility: hidden; pointer-events: none; }
 .mobile-nav { z-index: 30000; }
 .mobile-nav-backdrop { z-index: 29999; }
 .mobile-nav-panel { z-index: 30000; }
+
+/* Hide the header hamburger while the drawer is open */
+body.menu-open .nav-toggle {
+  visibility: hidden;   /* keeps layout stable */
+  pointer-events: none; /* extra safety */
+}
