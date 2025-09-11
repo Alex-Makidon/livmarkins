@@ -6,17 +6,9 @@
 (function () {
   const splash = document.getElementById('splash');
   const vid = document.getElementById('splashVideo');
-
-  // If there's a splash but no video (e.g., non-home pages), force-hide it so it can’t intercept taps.
-  if (splash && !vid) {
-    splash.classList.add('hide');
-    splash.style.pointerEvents = 'none';
-    return;
-  }
-
   if (!splash || !vid) return;
 
-  const finish = () => { if (!splash.classList.contains('hide')) splash.classList.add('hide'); splash.style.pointerEvents = 'none'; };
+  const finish = () => { if (!splash.classList.contains('hide')) splash.classList.add('hide'); };
   vid.addEventListener('ended', finish);
   splash.addEventListener('click', finish);
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') finish(); });
@@ -92,11 +84,11 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id"; // <-- replace
   }
 })();
 
-/* ===== Mobile burger nav — portal + single-pointer binding ===== */
+/* ===== Mobile burger nav — clean, reliable ===== */
 (function () {
   const drawer = document.getElementById('mobileNav');
-  const origToggle = document.querySelector('.nav-toggle');
-  if (!drawer || !origToggle) return;
+  const toggle = document.querySelector('.nav-toggle');
+  if (!drawer || !toggle) return;
 
   const panel = drawer.querySelector('.mobile-nav-panel');
   const closeBtn = drawer.querySelector('.nav-close');
@@ -104,7 +96,8 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id"; // <-- replace
 
   // Inject bottom CTAs exactly once
   if (panel) {
-    panel.querySelector('.mobile-cta')?.remove();
+    const existingCTA = panel.querySelector('.mobile-cta');
+    if (existingCTA) existingCTA.remove();
     const cta = document.createElement('div');
     cta.className = 'mobile-cta';
     cta.innerHTML = `
@@ -118,48 +111,46 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id"; // <-- replace
     if (!drawer.hidden) return;
     drawer.hidden = false;
     document.body.classList.add('menu-open');
-    portalToggle.setAttribute('aria-expanded', 'true');
+    toggle.setAttribute('aria-expanded', 'true');
   };
   const close = (focusToggle = true) => {
     if (drawer.hidden) return;
     document.body.classList.remove('menu-open');
-    portalToggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-expanded', 'false');
     drawer.hidden = true;
-    if (focusToggle) try { portalToggle.focus(); } catch {}
+    if (focusToggle) try { toggle.focus(); } catch {}
   };
 
-  // --- Create a PORTAL copy of the toggle at <body> level ---
-  // Hide the original (only on mobile via CSS; safe to also hide here)
-  origToggle.setAttribute('data-hidden-mobile', 'true');
+  // Make sure previous listeners (if any) don't double-handle:
+  toggle.replaceWith(toggle.cloneNode(true));
+  const freshToggle = document.querySelector('.nav-toggle');
 
-  const portalToggle = origToggle.cloneNode(true);
-  portalToggle.classList.add('nav-toggle-portal');
-  portalToggle.setAttribute('aria-expanded', 'false');
-
-  // Ensure there is only one portal button
-  document.querySelectorAll('.nav-toggle-portal').forEach(n => n.remove());
-  document.body.appendChild(portalToggle);
-
-  // Single, robust handler (avoid touchend+click double-fire)
-  const handle = (e) => {
+  const handlePress = (e) => {
+    // Only react to taps/clicks on the button itself
+    if (!e.currentTarget) return;
     e.preventDefault();
     e.stopPropagation();
-    const expanded = portalToggle.getAttribute('aria-expanded') === 'true';
+    const expanded = freshToggle.getAttribute('aria-expanded') === 'true';
     expanded ? close() : open();
   };
 
-  if (window.PointerEvent) {
-    portalToggle.addEventListener('pointerup', handle, { passive: false });
-  } else {
-    portalToggle.addEventListener('click', handle, { passive: false });
-  }
+  // Bind only to the toggle, with both click & touchend for iOS
+  ['click','touchend'].forEach(ev => {
+    freshToggle.addEventListener(ev, handlePress, { passive: false });
+  });
 
   // Close interactions
   closeBtn?.addEventListener('click', () => close());
   backdrop?.addEventListener('click', () => close());
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-  // Close menu on any nav link tap
-  panel?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => close(false)));
-  panel?.querySelectorAll('.mobile-cta a').forEach(a => a.addEventListener('click', () => close(false)));
+  // Close menu on any nav link tap (desktop menu unaffected)
+  panel?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => close(false));
+  });
+
+  // Also close before navigating via bottom CTA (prevents "double icons" flash)
+  panel?.querySelectorAll('.mobile-cta a').forEach(a => {
+    a.addEventListener('click', () => close(false));
+  });
 })();
