@@ -6,9 +6,17 @@
 (function () {
   const splash = document.getElementById('splash');
   const vid = document.getElementById('splashVideo');
+
+  // If there's a splash but no video (e.g., non-home pages), force-hide it so it can’t intercept taps.
+  if (splash && !vid) {
+    splash.classList.add('hide');
+    splash.style.pointerEvents = 'none';
+    return;
+  }
+
   if (!splash || !vid) return;
 
-  const finish = () => { if (!splash.classList.contains('hide')) splash.classList.add('hide'); };
+  const finish = () => { if (!splash.classList.contains('hide')) splash.classList.add('hide'); splash.style.pointerEvents = 'none'; };
   vid.addEventListener('ended', finish);
   splash.addEventListener('click', finish);
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') finish(); });
@@ -84,7 +92,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id"; // <-- replace
   }
 })();
 
-/* ===== Mobile burger nav — clean, reliable ===== */
+/* ===== Mobile burger nav — single-pointer binding to avoid iOS double-fire ===== */
 (function () {
   const drawer = document.getElementById('mobileNav');
   const toggle = document.querySelector('.nav-toggle');
@@ -121,35 +129,36 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id"; // <-- replace
     if (focusToggle) try { toggle.focus(); } catch {}
   };
 
-  // Make sure previous listeners (if any) don't double-handle:
+  // Replace any old listeners
   toggle.replaceWith(toggle.cloneNode(true));
   const freshToggle = document.querySelector('.nav-toggle');
 
-  const handlePress = (e) => {
-    // Only react to taps/clicks on the button itself
-    if (!e.currentTarget) return;
+  // Use a single *pointerup* handler to avoid touchend+click double toggles on iOS
+  let lastPointerType = null;
+  const handlePointerUp = (e) => {
+    lastPointerType = e.pointerType || lastPointerType || 'mouse';
     e.preventDefault();
     e.stopPropagation();
     const expanded = freshToggle.getAttribute('aria-expanded') === 'true';
     expanded ? close() : open();
   };
 
-  // Bind only to the toggle, with both click & touchend for iOS
-  ['click','touchend'].forEach(ev => {
-    freshToggle.addEventListener(ev, handlePress, { passive: false });
-  });
+  // Prefer Pointer Events if available; otherwise fall back to click.
+  if (window.PointerEvent) {
+    freshToggle.addEventListener('pointerup', handlePointerUp, { passive: false });
+  } else {
+    freshToggle.addEventListener('click', handlePointerUp, { passive: false });
+  }
 
   // Close interactions
   closeBtn?.addEventListener('click', () => close());
   backdrop?.addEventListener('click', () => close());
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-  // Close menu on any nav link tap (desktop menu unaffected)
+  // Close menu on any nav link tap
   panel?.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => close(false));
   });
-
-  // Also close before navigating via bottom CTA (prevents "double icons" flash)
   panel?.querySelectorAll('.mobile-cta a').forEach(a => {
     a.addEventListener('click', () => close(false));
   });
