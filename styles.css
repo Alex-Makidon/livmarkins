@@ -328,3 +328,12 @@ header .brand img.brand-wordmark{
 
 /* Safety: no horizontal scroll */
 html, body{ overflow-x:hidden; }
+
+/* keep the hamburger visible & tappable, but hide it while the menu is open (prevents double icon) */
+.nav-toggle { position: relative; z-index: 30001; }
+body.menu-open .nav-toggle { visibility: hidden; pointer-events: none; }
+
+/* absolute safety: drawer always sits above page content */
+.mobile-nav { z-index: 30000; }
+.mobile-nav-backdrop { z-index: 29999; }
+.mobile-nav-panel { z-index: 30000; }
