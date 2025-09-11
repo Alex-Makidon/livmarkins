@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Get a Quote — LivMarkins Insurance</title>
-  <meta name="description" content="Request an insurance quote from LivMarkins Insurance. We’ll follow up within one business day."/>
+  <title>About — LivMarkins Insurance</title>
+  <meta name="description" content="Learn more about LivMarkins Insurance — our mission, values, and personalized approach."/>
   <meta property="og:image" content="https://alex-makidon.github.io/livmarkins/assets/share-image.png?v=5">
   <link rel="stylesheet" href="styles.css?cachebust"/>
 </head>
@@ -15,8 +15,8 @@
       <nav class="nav-desktop" aria-label="Primary">
         <ul>
           <li><a href="index.html" class="home-link">Home</a></li>
-          <li><a href="about.html" class="about-link">About</a></li>
-          <li><a href="quote.html" class="quote-link active" aria-current="page">Get a Quote</a></li>
+          <li><a href="about.html" class="about-link active" aria-current="page">About</a></li>
+          <li><a href="quote.html" class="quote-link">Get a Quote</a></li>
           <li><a href="resources.html" class="res-link">Forms &amp; Resources</a></li>
         </ul>
       </nav>
@@ -29,7 +29,7 @@
         <button class="nav-close" aria-label="Close menu">✕</button>
         <ul>
           <li><a href="index.html" class="home-link">Home</a></li>
-          <li><a href="about.html" class="about-link">About</a></li>
+          <li><a href="about.html" class="about-link" aria-current="page">About</a></li>
           <li><a href="resources.html" class="res-link">Forms &amp; Resources</a></li>
         </ul>
       </div>
@@ -41,84 +41,10 @@
     <div class="container hero-inner">
       <div>
         <img src="assets/logo.png" alt="LivMarkins Insurance" class="hero-full-logo"/>
-        <h1>Get a Quote</h1>
-        <p>Complete this form and we’ll follow up within one business day.</p>
+        <h1>About Us</h1>
+        <p>We’re an independent agency focused on clarity and service.</p>
       </div>
-      <div class="card">
-        <h3>What to Expect</h3>
-        <p class="muted">We’ll review your request and contact you for any details needed to tailor a quote.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div id="form-status" class="notice hidden" role="status"></div>
-      <form id="quoteForm" action="https://formspree.io/f/your-form-id" method="POST" novalidate>
-        <div class="form-row">
-          <div class="input">
-            <label for="name">Full Name *</label>
-            <input id="name" name="name" required autocomplete="name">
-          </div>
-          <div class="input">
-            <label for="phone">Phone *</label>
-            <input id="phone" name="phone" type="tel" required autocomplete="tel">
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="input">
-            <label for="email">Email *</label>
-            <input id="email" name="email" type="email" required autocomplete="email">
-          </div>
-          <div class="input">
-            <label for="type">Insurance Type *</label>
-            <select id="type" name="insurance_type" required>
-              <option value="">Select one</option>
-              <option>Health</option>
-              <option>Life</option>
-              <option>Home</option>
-              <option>Auto</option>
-              <option>Trucking</option>
-              <option>Tower Climbers</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="form-row">
-          <div class="input">
-            <label for="city">City</label>
-            <input id="city" name="city" autocomplete="address-level2">
-          </div>
-          <div class="input">
-            <label for="state">State</label>
-            <input id="state" name="state" maxlength="2" placeholder="PA" autocomplete="address-level1">
-          </div>
-        </div>
-
-        <div class="input">
-          <label for="details">Anything else we should know?</label>
-          <textarea id="details" name="details" rows="4" placeholder="Vehicles, drivers, property details, current coverage, preferred times to reach you…"></textarea>
-        </div>
-
-        <div class="form-row">
-          <div class="input">
-            <label for="contact_pref">Preferred Contact</label>
-            <select id="contact_pref" name="contact_preference">
-              <option>Email</option>
-              <option>Phone</option>
-              <option>Text</option>
-            </select>
-          </div>
-          <div class="input">
-            <label for="best_time">Best Time to Reach You</label>
-            <input id="best_time" name="best_time" placeholder="e.g., Weekdays 9–11am MT">
-          </div>
-        </div>
-
-        <input type="hidden" name="_subject" value="New Quote Request — LivMarkins">
-        <button class="button" type="submit">Submit Request</button>
-      </form>
+      <div class="card"><h3>Our Promise</h3><p>Personal guidance and support when you need it.</p></div>
     </div>
   </section>
 
