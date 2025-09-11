@@ -371,3 +371,15 @@ header .brand img.brand-wordmark{
   /* Defensive: nothing in hero creates a stacking context that could eat taps */
   .hero, .hero * { transform: none !important; }
 }
+
+/* Ensure hidden overlays never swallow taps */
+.splash.hide {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Keep header above content on mobile; hamburger already fixed & at 40000 */
+@media (max-width: 820px){
+  header { z-index: 32000; }
+}
