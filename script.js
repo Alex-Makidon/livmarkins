@@ -1,4 +1,8 @@
-/* ===== Splash ===== */
+/* =========================================
+   LivMarkins — script.js (mobile nav rebuild)
+   ========================================= */
+
+/* ===== Splash (home only, safe no-op elsewhere) ===== */
 (function () {
   const splash = document.getElementById('splash');
   const vid = document.getElementById('splashVideo');
@@ -25,10 +29,11 @@
   vid.addEventListener('error', () => setTimeout(finish, 1200), { once:true });
 })();
 
-/* ===== Formspree ===== */
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id";
-const form = document.getElementById('quoteForm');
-if (form){
+/* ===== Formspree submit ===== */
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id"; // <-- replace with your real ID
+(function () {
+  const form = document.getElementById('quoteForm');
+  if (!form) return;
   form.addEventListener('submit', async (e)=>{
     e.preventDefault();
     const status = document.getElementById('form-status');
@@ -52,10 +57,10 @@ if (form){
       status.textContent = "Network error. Please try again or call us.";
     }
   });
-}
+})();
 
-/* ===== Resources loader ===== */
-(async function loadResources(){
+/* ===== Resources loader (resources.html only) ===== */
+(async function () {
   const list = document.getElementById('pdfList');
   if (!list) return;
   try{
@@ -79,7 +84,7 @@ if (form){
   }
 })();
 
-/* ===== Mobile burger nav (robust) ===== */
+/* ===== Mobile burger nav — clean, reliable ===== */
 (function () {
   const drawer = document.getElementById('mobileNav');
   const toggle = document.querySelector('.nav-toggle');
@@ -89,8 +94,10 @@ if (form){
   const closeBtn = drawer.querySelector('.nav-close');
   const backdrop = drawer.querySelector('.mobile-nav-backdrop');
 
-  // Inject bottom CTAs once
-  if (panel && !panel.querySelector('.mobile-cta')) {
+  // Inject bottom CTAs exactly once
+  if (panel) {
+    const existingCTA = panel.querySelector('.mobile-cta');
+    if (existingCTA) existingCTA.remove();
     const cta = document.createElement('div');
     cta.className = 'mobile-cta';
     cta.innerHTML = `
@@ -111,34 +118,39 @@ if (form){
     document.body.classList.remove('menu-open');
     toggle.setAttribute('aria-expanded', 'false');
     drawer.hidden = true;
-    if (focusToggle) toggle.focus();
+    if (focusToggle) try { toggle.focus(); } catch {}
   };
 
-  // Event delegation so taps always work (even if something overlaps)
-  const onAnyTogglePress = (e) => {
-    const btn = e.target.closest('.nav-toggle');
-    if (!btn) return;
+  // Make sure previous listeners (if any) don't double-handle:
+  toggle.replaceWith(toggle.cloneNode(true));
+  const freshToggle = document.querySelector('.nav-toggle');
+
+  const handlePress = (e) => {
+    // Only react to taps/clicks on the button itself
+    if (!e.currentTarget) return;
     e.preventDefault();
     e.stopPropagation();
-    (toggle.getAttribute('aria-expanded') === 'true') ? close() : open();
+    const expanded = freshToggle.getAttribute('aria-expanded') === 'true';
+    expanded ? close() : open();
   };
-  ['click','pointerup','touchend'].forEach(ev => {
-    document.addEventListener(ev, onAnyTogglePress, { passive: false });
+
+  // Bind only to the toggle, with both click & touchend for iOS
+  ['click','touchend'].forEach(ev => {
+    freshToggle.addEventListener(ev, handlePress, { passive: false });
   });
 
+  // Close interactions
   closeBtn?.addEventListener('click', () => close());
   backdrop?.addEventListener('click', () => close());
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-  // Close before navigating to Quote (polish)
-  drawer.querySelectorAll('a[href="quote.html"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      close(false);
-      requestAnimationFrame(() => { window.location.href = 'quote.html'; });
-    });
+  // Close menu on any nav link tap (desktop menu unaffected)
+  panel?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => close(false));
   });
 
-  // Prevent clicks inside panel from leaking
-  panel?.addEventListener('click', (e) => { e.stopPropagation(); }, true);
+  // Also close before navigating via bottom CTA (prevents "double icons" flash)
+  panel?.querySelectorAll('.mobile-cta a').forEach(a => {
+    a.addEventListener('click', () => close(false));
+  });
 })();
