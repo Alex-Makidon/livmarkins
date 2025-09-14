@@ -1,5 +1,5 @@
 /* =========================================
-   LivMarkins — script.js (mobile nav rebuild)
+   LivMarkins — script.js
    ========================================= */
 
 /* ===== Splash (home only, safe no-op elsewhere) ===== */
@@ -30,31 +30,50 @@
 })();
 
 /* ===== Formspree submit ===== */
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id"; // <-- replace with your real ID
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xwpnjvvl"; // ✅ real endpoint
 (function () {
   const form = document.getElementById('quoteForm');
   if (!form) return;
-  form.addEventListener('submit', async (e)=>{
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
     const status = document.getElementById('form-status');
-    status.className = "notice";
-    status.textContent = "Submitting...";
-    status.classList.remove('hidden');
+    if (status) {
+      status.className = "notice";
+      status.textContent = "Submitting...";
+      status.classList.remove('hidden');
+    }
+
     const data = new FormData(form);
-    try{
-      const res = await fetch(FORMSPREE_ENDPOINT, { method: 'POST', headers: { 'Accept':'application/json' }, body: data });
-      if (res.ok){
-        status.className = "notice success";
-        status.textContent = "Thanks! Your request has been sent. We'll reach out within one business day.";
-        form.reset();
+
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: data
+      });
+
+      if (res.ok) {
+        // ✅ Redirect to thank you page on success
+        window.location.href = 'thank-you.html';
+        return;
       } else {
-        const msg = await res.json().catch(()=>({}));
-        status.className = "notice alert";
-        status.textContent = (msg && msg.errors && msg.errors[0] && msg.errors[0].message) || "Something went wrong. Please try again or call us.";
+        let msg = "Something went wrong. Please try again or call us.";
+        try {
+          const j = await res.json();
+          if (j?.errors?.length) msg = j.errors.map(e => e.message).join(' ');
+        } catch {}
+        if (status) {
+          status.className = "notice alert";
+          status.textContent = msg;
+        }
       }
-    } catch{
-      status.className = "notice alert";
-      status.textContent = "Network error. Please try again or call us.";
+    } catch {
+      if (status) {
+        status.className = "notice alert";
+        status.textContent = "Network error. Please try again or call us.";
+      }
     }
   });
 })();
@@ -63,11 +82,11 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id"; // <-- replace
 (async function () {
   const list = document.getElementById('pdfList');
   if (!list) return;
-  try{
+  try {
     const res = await fetch('assets/resources.json');
     if (!res.ok) throw new Error('No resources.json yet');
     const items = await res.json();
-    if (!Array.isArray(items) || !items.length){
+    if (!Array.isArray(items) || !items.length) {
       list.innerHTML = '<div class="muted">No resources yet. Check back soon.</div>';
       return;
     }
@@ -79,7 +98,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id"; // <-- replace
       </div>
     `).join('');
     list.innerHTML = html;
-  } catch{
+  } catch {
     list.innerHTML = '<div class="muted">No resources yet. Check back soon.</div>';
   }
 })();
@@ -121,12 +140,10 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id"; // <-- replace
     if (focusToggle) try { toggle.focus(); } catch {}
   };
 
-  // Make sure previous listeners (if any) don't double-handle:
   toggle.replaceWith(toggle.cloneNode(true));
   const freshToggle = document.querySelector('.nav-toggle');
 
   const handlePress = (e) => {
-    // Only react to taps/clicks on the button itself
     if (!e.currentTarget) return;
     e.preventDefault();
     e.stopPropagation();
@@ -134,22 +151,18 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/your-form-id"; // <-- replace
     expanded ? close() : open();
   };
 
-  // Bind only to the toggle, with both click & touchend for iOS
   ['click','touchend'].forEach(ev => {
     freshToggle.addEventListener(ev, handlePress, { passive: false });
   });
 
-  // Close interactions
   closeBtn?.addEventListener('click', () => close());
   backdrop?.addEventListener('click', () => close());
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
 
-  // Close menu on any nav link tap (desktop menu unaffected)
   panel?.querySelectorAll('a').forEach(a => {
     a.addEventListener('click', () => close(false));
   });
 
-  // Also close before navigating via bottom CTA (prevents "double icons" flash)
   panel?.querySelectorAll('.mobile-cta a').forEach(a => {
     a.addEventListener('click', () => close(false));
   });
