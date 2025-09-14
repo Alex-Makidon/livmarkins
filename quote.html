@@ -51,51 +51,51 @@
     <div class="container">
       <div id="form-status" class="notice hidden" role="status" aria-live="polite"></div>
 
-<form id="quoteForm" action="https://formspree.io/f/xwpnjvvl" method="POST" novalidate>
-  <div class="form-row">
-    <div class="input">
-      <label for="name">Full Name *</label>
-      <input id="name" name="name" type="text" required autocomplete="name"/>
-    </div>
-    <div class="input">
-      <label for="phone">Phone *</label>
-      <input id="phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" pattern="^[0-9()+\\-.\\s]{7,}$"/>
-    </div>
-  </div>
-  <div class="form-row">
-    <div class="input">
-      <label for="email">Email *</label>
-      <!-- changed name to _replyto so Formspree uses it as Reply-To -->
-      <input id="email" name="_replyto" type="email" required autocomplete="email" inputmode="email"/>
-    </div>
-    <div class="input">
-      <label for="type">Insurance Type *</label>
-      <select id="type" name="insurance_type" required>
-        <option value="">Select one</option>
-        <option>Health</option>
-        <option>Life</option>
-        <option>Home</option>
-        <option>Auto</option>
-        <option>Trucking</option>
-        <option>Tower Climbers</option>
-      </select>
-    </div>
-  </div>
-  <div class="input">
-    <label for="message">Notes</label>
-    <textarea id="message" name="message" rows="4" placeholder="Tell us a bit about your needs (drivers, property, business, etc.)"></textarea>
-  </div>
+      <form id="quoteForm" action="https://formspree.io/f/xwpnjvvl" method="POST" novalidate>
+        <div class="form-row">
+          <div class="input">
+            <label for="name">Full Name *</label>
+            <input id="name" name="name" type="text" required autocomplete="name"/>
+          </div>
+          <div class="input">
+            <label for="phone">Phone *</label>
+            <input id="phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" pattern="^[0-9()+\\-.\\s]{7,}$"/>
+          </div>
+        </div>
 
-  <!-- Optional helpers -->
-  <input type="hidden" name="_subject" value="New Quote Request from LivMarkins.com">
-  <input type="hidden" name="_redirect" value="https://livmarkins.com/thank-you.html">
+        <div class="form-row">
+          <div class="input">
+            <label for="email">Email *</label>
+            <!-- Use _replyto so Formspree uses it as Reply-To -->
+            <input id="email" name="_replyto" type="email" required autocomplete="email" inputmode="email"/>
+          </div>
+          <div class="input">
+            <label for="type">Insurance Type *</label>
+            <select id="type" name="insurance_type" required>
+              <option value="">Select one</option>
+              <option>Health</option>
+              <option>Life</option>
+              <option>Home</option>
+              <option>Auto</option>
+              <option>Trucking</option>
+              <option>Tower Climbers</option>
+            </select>
+          </div>
+        </div>
 
-  <!-- Honeypot anti-spam -->
-  <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+        <div class="input">
+          <label for="message">Notes</label>
+          <textarea id="message" name="message" rows="4" placeholder="Tell us a bit about your needs (drivers, property, business, etc.)"></textarea>
+        </div>
 
-  <button class="button" type="submit">Submit</button>
-</form>      
+        <!-- Optional helpers -->
+        <input type="hidden" name="_subject" value="New Quote Request from LivMarkins.com">
+        <input type="hidden" name="_redirect" value="https://livmarkins.com/thank-you.html">
+
+        <!-- Honeypot anti-spam -->
         <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+        <!-- Single submit button -->
         <button class="button" type="submit">Submit</button>
       </form>
 
