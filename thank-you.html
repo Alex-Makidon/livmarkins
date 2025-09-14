@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Thank You — LivMarkins Insurance</title>
+  <meta name="description" content="Thank you for contacting LivMarkins Insurance. We’ll be in touch shortly."/>
+  <link rel="stylesheet" href="styles.css?cachebust"/>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <a href="index.html">
+          <img src="assets/logo_name.png?v=5" alt="LivMarkins" class="brand-wordmark"/>
+        </a>
+      </div>
+      <nav class="nav-desktop" aria-label="Primary">
+        <ul>
+          <li><a href="index.html" class="home-link">Home</a></li>
+          <li><a href="about.html" class="about-link">About</a></li>
+          <li><a href="quote.html" class="quote-link">Get a Quote</a></li>
+          <li><a href="resources.html" class="res-link">Forms &amp; Resources</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero-style thank you section -->
+  <section class="hero">
+    <div class="container hero-inner" style="text-align:center">
+      <img src="assets/logo.png" alt="LivMarkins Insurance" class="hero-full-logo"/>
+      <h1>Thank You!</h1>
+      <p>We’ve received your request and will be in touch within one business day.</p>
+      <a href="index.html" class="button">Return to Home</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <div class="brand" style="margin-bottom:10px"><strong>LivMarkins Insurance</strong></div>
+        <div class="muted">
+          Phone: <a href="tel:+12155155975">215-515-5975</a><br/>
+          <a href="https://livmarkins.com">livmarkins.com</a>
+        </div>
+      </div>
+      <div>
+        <strong>Lines We Cover</strong>
+        <ul class="muted">
+          <li>Health</li><li>Life</li><li>Home &amp; Auto</li><li>Trucking</li><li>Tower Climbers</li>
+        </ul>
+      </div>
+      <div>
+        <strong>Company</strong>
+        <ul class="muted">
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="quote.html">Get a Quote</a></li>
+          <li><a href="resources.html">Forms &amp; Resources</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="container">
+      <small>© <span id="year"></span> LivMarkins Insurance. All rights reserved.</small>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
