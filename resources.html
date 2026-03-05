@@ -62,12 +62,30 @@
       <div id="pdfList">
 
         <div class="resource-item">
-          <a href="assets/resources/cms-marketplace-form.pdf" target="_blank" class="resource-link">
+          <a
+            href="assets/resources/cms-marketplace-form.pdf"
+            target="_blank"
+            rel="noopener"
+            class="resource-link"
+            aria-label="Open CMS Marketplace Form PDF in a new tab"
+          >
             <strong>CMS Marketplace Form</strong>
           </a>
 
           <p class="muted">
             Before we can begin to assist you with your health insurance needs please fill, sign, and return to us.
+          </p>
+
+          <!-- Optional: direct download link -->
+          <p style="margin-top:8px;">
+            <a
+              href="assets/resources/cms-marketplace-form.pdf"
+              download="CMS-Marketplace-Form.pdf"
+              class="muted"
+              aria-label="Download CMS Marketplace Form PDF"
+            >
+              Download PDF
+            </a>
           </p>
         </div>
 
@@ -123,4 +141,3 @@ document.getElementById('year').textContent = new Date().getFullYear()
 <script src="script.js?cachebust" defer></script>
 
 </body>
-</html>
