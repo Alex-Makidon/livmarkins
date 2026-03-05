@@ -78,29 +78,20 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xwpnjvvl"; // ✅ real endpoi
   });
 })();
 
-/* ===== Resources loader (resources.html only) ===== */
-(async function () {
+/* ===== Resources loader (resources.html only) =====
+   FIXED: Do NOT overwrite your hard-coded resources.
+   Your CMS Marketplace Form is in resources.html already,
+   so this script now "hands off" if it sees any items.
+*/
+(function () {
   const list = document.getElementById('pdfList');
   if (!list) return;
-  try {
-    const res = await fetch('assets/resources.json');
-    if (!res.ok) throw new Error('No resources.json yet');
-    const items = await res.json();
-    if (!Array.isArray(items) || !items.length) {
-      list.innerHTML = '<div class="muted">No resources yet. Check back soon.</div>';
-      return;
-    }
-    const html = items.map(item => `
-      <div class="card">
-        <h3>${item.title || 'Document'}</h3>
-        <p class="muted">${item.description || ''}</p>
-        <a class="button" href="${item.href}" download>Download PDF</a>
-      </div>
-    `).join('');
-    list.innerHTML = html;
-  } catch {
-    list.innerHTML = '<div class="muted">No resources yet. Check back soon.</div>';
-  }
+
+  // ✅ If you already have hard-coded resources, leave them alone.
+  if (list.querySelector('.resource-item') || list.querySelector('a')) return;
+
+  // Optional: if the list is truly empty, show a default message.
+  list.innerHTML = '<div class="muted">No resources yet. Check back soon.</div>';
 })();
 
 /* ===== Mobile burger nav — clean, reliable ===== */
