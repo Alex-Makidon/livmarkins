@@ -300,7 +300,7 @@ input:focus, select:focus, textarea:focus{
    Carrier logo running board
    =========================== */
 .carrier-strip{
-  padding:28px 0 32px;
+  padding:30px 0 36px;
   border-bottom:1px solid #e8e4dd;
   background:linear-gradient(180deg,#faf8f3,#f6f3ed);
 }
@@ -320,6 +320,7 @@ input:focus, select:focus, textarea:focus{
   border-top:1px solid #e8e4dd;
   border-bottom:1px solid #e8e4dd;
   background:#fbfaf6;
+  -webkit-tap-highlight-color:transparent;
 }
 
 .carrier-marquee::before,
@@ -346,10 +347,11 @@ input:focus, select:focus, textarea:focus{
 .carrier-track{
   display:flex;
   align-items:center;
-  gap:48px;
+  gap:54px;
   width:max-content;
-  padding:18px 0;
+  padding:22px 0;
   animation:carrierScroll 65s linear infinite;
+  will-change:transform;
 }
 
 .carrier-marquee:hover .carrier-track{
@@ -357,24 +359,25 @@ input:focus, select:focus, textarea:focus{
 }
 
 .carrier-track img{
-  height:38px;
+  height:46px;
   width:auto;
-  max-width:160px;
+  max-width:180px;
   object-fit:contain;
   flex:0 0 auto;
-  opacity:.85;
+  opacity:.82;
   filter:grayscale(100%);
-  transition:transform .25s ease, opacity .25s ease, filter .25s ease;
+  transition:transform .28s ease, opacity .28s ease, filter .28s ease;
+  transform-origin:center center;
 }
 
 .carrier-marquee:hover .carrier-track img{
-  opacity:.35;
+  opacity:.32;
 }
 
 .carrier-track img:hover{
   opacity:1;
   filter:grayscale(0%);
-  transform:scale(1.18);
+  transform:scale(1.28);
   z-index:5;
   position:relative;
 }
@@ -488,7 +491,7 @@ small, .muted{ color:#6b6b6b; }
   }
 
   .carrier-strip{
-    padding:22px 0 26px;
+    padding:24px 0 28px;
   }
 
   .carrier-strip-title{
@@ -502,22 +505,32 @@ small, .muted{ color:#6b6b6b; }
   }
 
   .carrier-track{
-    gap:28px;
-    padding:14px 0;
-    animation-duration:40s;
+    gap:30px;
+    padding:16px 0;
+    animation-duration:42s;
   }
 
   .carrier-track img{
-    height:28px;
-    max-width:120px;
+    height:34px;
+    max-width:135px;
+  }
+
+  /* Disable sticky hover/tap behavior on touch devices */
+  .carrier-marquee:hover .carrier-track{
+    animation-play-state:running;
   }
 
   .carrier-marquee:hover .carrier-track img{
-    opacity:1;
+    opacity:.82;
   }
 
-  .carrier-track img:hover{
-    transform:scale(1.1);
+  .carrier-track img:hover,
+  .carrier-track img:active,
+  .carrier-track img:focus{
+    opacity:.82;
+    filter:grayscale(100%);
+    transform:none;
+    position:static;
   }
 
   /* Fix header to top on mobile and reserve space */
