@@ -304,7 +304,11 @@ input:focus, select:focus, textarea:focus{
   gap:48px;
   width:max-content;
   padding:18px 0;
-  animation:carrierScroll 42s linear infinite;
+  animation:carrierScroll 65s linear infinite;
+}
+
+.carrier-marquee:hover .carrier-track{
+  animation-play-state:paused;
 }
 
 .carrier-track img{
@@ -313,15 +317,21 @@ input:focus, select:focus, textarea:focus{
   max-width:160px;
   object-fit:contain;
   flex:0 0 auto;
-  opacity:.9;
+  opacity:.85;
   filter:grayscale(100%);
-  transition:opacity .25s ease, filter .25s ease, transform .25s ease;
+  transition:transform .25s ease, opacity .25s ease, filter .25s ease;
+}
+
+.carrier-marquee:hover .carrier-track img{
+  opacity:.35;
 }
 
 .carrier-track img:hover{
   opacity:1;
   filter:grayscale(0%);
-  transform:translateY(-1px);
+  transform:scale(1.18);
+  z-index:5;
+  position:relative;
 }
 
 @keyframes carrierScroll{
@@ -428,12 +438,20 @@ small, .muted{ color:#6b6b6b; }
   .carrier-track{
     gap:28px;
     padding:14px 0;
-    animation-duration:30s;
+    animation-duration:40s;
   }
 
   .carrier-track img{
     height:28px;
     max-width:120px;
+  }
+
+  .carrier-marquee:hover .carrier-track img{
+    opacity:1;
+  }
+
+  .carrier-track img:hover{
+    transform:scale(1.1);
   }
 
   /* Fix header to top on mobile and reserve space */
