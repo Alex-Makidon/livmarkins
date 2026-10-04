@@ -35,8 +35,16 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xwpnjvvl"; // ✅ real endpoi
   const form = document.getElementById('quoteForm');
   if (!form) return;
 
+  // Keep the existing form, with trucking selected for campaign visitors.
+  const requestedType = new URLSearchParams(window.location.search).get('type');
+  const insuranceType = form.querySelector('[name="insurance_type"]');
+  if (insuranceType && requestedType && Array.from(insuranceType.options).some(option => option.value === requestedType)) {
+    insuranceType.value = requestedType;
+  }
+
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (!form.reportValidity()) return;
 
     const status = document.getElementById('form-status');
     if (status) {
@@ -56,7 +64,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xwpnjvvl"; // ✅ real endpoi
 
       if (res.ok) {
         // ✅ Redirect to thank you page on success
-        window.location.href = 'thank-you.html';
+        window.location.href = '/thank-you.html';
         return;
       } else {
         let msg = "Something went wrong. Please try again or call us.";
@@ -111,7 +119,7 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xwpnjvvl"; // ✅ real endpoi
     const cta = document.createElement('div');
     cta.className = 'mobile-cta';
     cta.innerHTML = `
-      <a class="button" href="quote.html">Get a Quote</a>
+      <a class="button" href="/get-a-quote/">Get a Quote</a>
       <a class="button secondary" href="tel:+12155155975">Call Now</a>
     `;
     panel.appendChild(cta);
@@ -131,20 +139,16 @@ const FORMSPREE_ENDPOINT = "https://formspree.io/f/xwpnjvvl"; // ✅ real endpoi
     if (focusToggle) try { toggle.focus(); } catch {}
   };
 
-  toggle.replaceWith(toggle.cloneNode(true));
-  const freshToggle = document.querySelector('.nav-toggle');
 
   const handlePress = (e) => {
     if (!e.currentTarget) return;
     e.preventDefault();
     e.stopPropagation();
-    const expanded = freshToggle.getAttribute('aria-expanded') === 'true';
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
     expanded ? close() : open();
   };
 
-  ['click','touchend'].forEach(ev => {
-    freshToggle.addEventListener(ev, handlePress, { passive: false });
-  });
+  toggle.addEventListener('click', handlePress);
 
   closeBtn?.addEventListener('click', () => close());
   backdrop?.addEventListener('click', () => close());
